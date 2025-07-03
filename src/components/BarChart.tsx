@@ -63,13 +63,13 @@ const CustomBar = (props: any) => {
 // This component gets dynamically imported
 export function BarChart({ data, className = "h-[130px]" }: BarChartProps) {
   return (
-    <div className={`w-full border-b-4 border-black ${className}`}>
+    // <div className={`w-full border-b-4 border-black ${className}`}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart data={data} barGap={2}>
           <XAxis dataKey="name" hide />
           <Bar dataKey="value" shape={CustomBar} />
         </RechartsBarChart>
       </ResponsiveContainer>
-    </div>
+    // </div>
   );
 }

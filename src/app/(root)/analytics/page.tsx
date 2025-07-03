@@ -306,10 +306,11 @@ export default function Analytics() {
             </div>
           </div>
         </div>
-        {/* Middle Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-          {/* Sales Chart */}
-          <div className="lg:col-span-2">
+        {/* Main Layout - Left to Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+          {/* Left Section - Charts (4/6 width) */}
+          <div className="lg:col-span-4 space-y-4">
+            {/* Sales Chart */}
             <Card className="rounded-4xl">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-gray-900">
@@ -369,132 +370,135 @@ export default function Analytics() {
                 </ChartContainer>
               </CardContent>
             </Card>
-          </div>
 
-          {/* Right Stats Panel */}
-          <div className="space-y-4 bg-white p-4 rounded-4xl">
-            <StatCard label="Shipping costs" value="1000" />
-            <StatCard label="Taxes" value="0" />
-            <StatCard label="Orders" value="0" currency />
-            <StatCard label="Total refunds" value="0" currency />
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Average Order Value */}
-          <div className="bg-white rounded-4xl p-6">
-            <h3 className="text-lg font-bold mb-4">Average Order Value</h3>
-            <div className="text-3xl flex items-center gap-2 mb-6">
-              <SaudiRiyal size={24} />
-              <span>967 M</span>
-            </div>
-            <div className="h-32">
-              <ChartContainer config={avgOrderChartConfig}>
-                <RechartsLineChart
-                  data={avgOrderData}
-                  margin={{
-                    left: 5,
-                    right: 5,
-                    top: 5,
-                    bottom: 20,
-                  }}
-                >
-                  <CartesianGrid
-                    vertical={false}
-                    strokeDasharray="3 3"
-                    stroke="#e5e7eb"
-                  />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    className="text-xs text-gray-500"
-                    interval={1}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="value"
-                    type="monotone"
-                    stroke="var(--color-value)"
-                    strokeWidth={3}
-                    dot={{
-                      fill: "var(--color-value)",
-                      strokeWidth: 2,
-                      r: 4,
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </RechartsLineChart>
-              </ChartContainer>
-            </div>
-          </div>
-
-          {/* User Analysis */}
-          <div className="bg-white rounded-4xl p-6">
-            <div className="">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">User Analysis</h3>
-              </div>
-              <div className="flex flex-col">
-                <MetricRow
-                  icon={
-                    <Users
-                      size={50}
-                      className="text-black bg-gray-200 p-2 rounded-full"
-                    />
-                  }
-                  value="495M"
-                  percentChange="%17.7"
-                  isPositive={true}
-                />
-                <MetricRow
-                  icon={
-                    <Company
-                      className={
-                        "w-14 aspect-square bg-gray-200 p-2 rounded-full"
-                      }
-                      color="#000"
-                    />
-                  }
-                  value="945M"
-                  percentChange="%19.5"
-                  isPositive={true}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Total Sadaca */}
-          <div className="bg-white rounded-4xl p-6">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">Total Sadaca</h3>
-              <button
-                onClick={handleSadacaModelClose}
-                className="bg-gray-200 rounded-full p-2 cursor-pointer outline-none border-none"
-              >
-                <ArrowUpRight className="w-5 h-5 font-bold" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-lg">Total Donations</span>
-                <div className="text-3xl flex items-center justify-center gap-2">
+            {/* Bottom Charts Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Average Order Value */}
+              <div className="bg-white rounded-4xl p-6">
+                <h3 className="text-lg font-bold mb-4">Average Order Value</h3>
+                <div className="text-3xl flex items-center gap-2 mb-6">
                   <SaudiRiyal size={24} />
-                  <span>900 M</span>
+                  <span>967 M</span>
+                </div>
+                <div className="h-32">
+                  <ChartContainer config={avgOrderChartConfig}>
+                    <RechartsLineChart
+                      data={avgOrderData}
+                      margin={{
+                        left: 5,
+                        right: 5,
+                        top: 5,
+                        bottom: 20,
+                      }}
+                    >
+                      <CartesianGrid
+                        vertical={false}
+                        strokeDasharray="3 3"
+                        stroke="#e5e7eb"
+                      />
+                      <XAxis
+                        dataKey="month"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                        className="text-xs text-gray-500"
+                        interval={1}
+                      />
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel />}
+                      />
+                      <Line
+                        dataKey="value"
+                        type="monotone"
+                        stroke="var(--color-value)"
+                        strokeWidth={3}
+                        dot={{
+                          fill: "var(--color-value)",
+                          strokeWidth: 2,
+                          r: 4,
+                        }}
+                        activeDot={{
+                          r: 6,
+                        }}
+                      />
+                    </RechartsLineChart>
+                  </ChartContainer>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-lg">Due Charities</span>
-                <div className="text-3xl flex items-center justify-center gap-2">
-                  <SaudiRiyal size={24} />
-                  <span>900</span>
+
+              {/* User Analysis */}
+              <div className="bg-white rounded-4xl p-6">
+                <div className="">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">User Analysis</h3>
+                  </div>
+                  <div className="flex flex-col">
+                    <MetricRow
+                      icon={
+                        <Users
+                          size={50}
+                          className="text-black bg-gray-200 p-2 rounded-full"
+                        />
+                      }
+                      value="495M"
+                      percentChange="%17.7"
+                      isPositive={true}
+                    />
+                    <MetricRow
+                      icon={
+                        <Company
+                          className={
+                            "w-14 aspect-square bg-gray-200 p-2 rounded-full"
+                          }
+                          color="#000"
+                        />
+                      }
+                      value="945M"
+                      percentChange="%19.5"
+                      isPositive={true}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Section - Stats Panel (2/6 width) */}
+          <div className="lg:col-span-2 space-y-4 flex flex-col">
+            {/* Stats Cards */}
+            <div className="bg-white p-4 rounded-4xl space-y-4 flex-2/5">
+              <StatCard label="Shipping costs" value="1000" />
+              <StatCard label="Taxes" value="0" />
+              <StatCard label="Orders" value="0" currency />
+              <StatCard label="Total refunds" value="0" currency />
+            </div>
+
+            {/* Total Sadaca */}
+            <div className="bg-white rounded-4xl p-6 flex-2/5">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-semibold">Total Sadaca</h3>
+                <button
+                  onClick={handleSadacaModelClose}
+                  className="bg-gray-200 rounded-full p-2 cursor-pointer outline-none border-none"
+                >
+                  <ArrowUpRight className="w-5 h-5 font-bold" />
+                </button>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg">Total Donations</span>
+                  <div className="text-3xl flex items-center justify-center gap-2">
+                    <SaudiRiyal size={24} />
+                    <span>900 M</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg">Due Charities</span>
+                  <div className="text-3xl flex items-center justify-center gap-2">
+                    <SaudiRiyal size={24} />
+                    <span>900</span>
+                  </div>
                 </div>
               </div>
             </div>

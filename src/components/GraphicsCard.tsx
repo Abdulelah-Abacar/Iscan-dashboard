@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AnalyticsLink } from "./AnalyticsLink";
 import { Card } from "./Card";
 import { SectionTitle } from "./SectionTitle";
@@ -98,19 +98,133 @@ const dataCategories = [
 export const GraphicsCard = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [mouseStart, setMouseStart] = useState(null);
+  const [mouseEnd, setMouseEnd] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const timerRef = useRef(null);
+
+  // Minimum swipe distance to trigger slide change
+  const minSwipeDistance = 50;
+
+  // Function to change slide with transition
+  const changeSlide = (newIndex) => {
+    if (newIndex === currentIndex || isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsTransitioning(false);
+    }, 250);
+  };
+
+  // Function to go to next slide
+  const nextSlide = () => {
+    const newIndex = (currentIndex + 1) % dataCategories.length;
+    changeSlide(newIndex);
+  };
+
+  // Function to go to previous slide
+  const prevSlide = () => {
+    const newIndex = currentIndex === 0 ? dataCategories.length - 1 : currentIndex - 1;
+    changeSlide(newIndex);
+  };
+
+  // Reset and start timer
+  const resetTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    
+    timerRef.current = setInterval(() => {
+      if (!isDragging) {
+        nextSlide();
+      }
+    }, 10000);
+  };
 
   // Function to handle automatic rotation
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % dataCategories.length);
-        setIsTransitioning(false);
-      }, 500); // Wait for fade out before changing data
-    }, 10000); // Change every 10 seconds
+    resetTimer();
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [currentIndex, isDragging]);
 
-    return () => clearInterval(timer);
-  }, []);
+  // Touch event handlers
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      setIsDragging(false);
+      return;
+    }
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+    
+    setIsDragging(false);
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  // Mouse event handlers for desktop drag
+  const onMouseDown = (e) => {
+    setMouseEnd(null);
+    setMouseStart(e.clientX);
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    setMouseEnd(e.clientX);
+  };
+
+  const onMouseUp = () => {
+    if (!mouseStart || !mouseEnd || !isDragging) {
+      setIsDragging(false);
+      return;
+    }
+    
+    const distance = mouseStart - mouseEnd;
+    const isLeftDrag = distance > minSwipeDistance;
+    const isRightDrag = distance < -minSwipeDistance;
+
+    if (isLeftDrag) {
+      nextSlide();
+    } else if (isRightDrag) {
+      prevSlide();
+    }
+    
+    setIsDragging(false);
+    setMouseStart(null);
+    setMouseEnd(null);
+  };
+
+  const onMouseLeave = () => {
+    setIsDragging(false);
+    setMouseStart(null);
+    setMouseEnd(null);
+  };
 
   // Indicator dots to show which chart is active
   const renderIndicators = () => {
@@ -119,7 +233,10 @@ export const GraphicsCard = () => {
         {dataCategories.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => {
+              changeSlide(index);
+              resetTimer();
+            }}
             className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
               index === currentIndex ? "bg-green-600 w-4" : "bg-gray-300"
             }`}
@@ -139,10 +256,18 @@ export const GraphicsCard = () => {
         <AnalyticsLink />
       </div>
       <div
-        className={`transition-opacity duration-500 ${
+        className={`relative transition-opacity h-[130px] duration-250 select-none ${
           isTransitioning ? "opacity-0" : "opacity-100"
-        }`}
+        } ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
       >
+        <div className="absolute inset-0 z-30" />
         <BarChart data={currentData.data} />
       </div>
       {renderIndicators()}

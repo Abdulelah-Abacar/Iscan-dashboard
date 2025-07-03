@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ClientRow } from "@/components/ClientRow";
+import { ClientRow } from "@/components/clients/ClientRow";
 import { RefreshCw, Search, X } from "lucide-react";
 
 export default function Clients() {

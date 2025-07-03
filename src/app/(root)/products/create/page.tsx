@@ -29,14 +29,22 @@ export default function CreateProductPage() {
   const [isDigitalProduct, setIsDigitalProduct] = useState(false);
   const [hasOptions, setHasOptions] = useState(false);
   const [optionsList, setOptionsList] = useState([]);
+  const [availableOptions, setAvailableOptions] = useState([
+    "Color",
+    "Size",
+    "Material",
+    "Style",
+  ]);
   const [currentEditingOption, setCurrentEditingOption] = useState(null);
+  const [seoPageTitle, setSeoPageTitle] = useState("");
+  const [seoMetaDescription, setSeoMetaDescription] = useState("");
   const router = useRouter();
 
   const addNewOption = () => {
     const newOption = {
       id: Date.now(),
       name: "",
-      values: [""],
+      values: [],
       isEditing: true,
     };
     setOptionsList([...optionsList, newOption]);
@@ -45,9 +53,14 @@ export default function CreateProductPage() {
 
   const handleOptionNameChange = (optionId, name) => {
     setOptionsList(
-      optionsList.map((option) =>
-        option.id === optionId ? { ...option, name } : option
-      )
+      optionsList.map((option) => {
+        if (option.id === optionId) {
+          // If name is being set and values array is empty, add first empty value
+          const updatedValues = option.values.length === 0 && name ? [""] : option.values;
+          return { ...option, name, values: updatedValues };
+        }
+        return option;
+      })
     );
   };
 
@@ -90,9 +103,18 @@ export default function CreateProductPage() {
   };
 
   const deleteOption = (optionId) => {
-    setOptionsList(optionsList.filter((option) => option.id !== optionId));
+    const updatedOptions = optionsList.filter(
+      (option) => option.id !== optionId
+    );
+    setOptionsList(updatedOptions);
+
     if (currentEditingOption === optionId) {
       setCurrentEditingOption(null);
+    }
+
+    // Set hasOptions to false when no options remain
+    if (updatedOptions.length === 0) {
+      setHasOptions(false);
     }
   };
 
@@ -174,7 +196,7 @@ export default function CreateProductPage() {
       <section className="bg-gray-200 rounded-3xl px-4 md:px-8 py-4 mb-24 md:mb-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column - Product details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6 flex flex-col">
             {/* Title section */}
             <div className="bg-white p-4 md:p-6 rounded-3xl md:rounded-4xl shadow-sm">
               <input
@@ -192,11 +214,11 @@ export default function CreateProductPage() {
             </div>
 
             {/* Media section */}
-            <div className="bg-white px-4 md:px-6 py-3 rounded-3xl md:rounded-4xl shadow-sm">
+            <div className="bg-white px-4 md:px-6 py-3 rounded-3xl md:rounded-4xl shadow-sm flex-1 flex flex-col">
               <h2 className="text-lg md:text-xl font-medium mb-4">Media</h2>
-              <div className="grid grid-cols-2 md:grid-cols-9 gap-2 md:gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-9 gap-2 md:gap-4 flex-1">
                 {/* Left big image - spans 5 columns */}
-                <div className="col-span-1 md:col-span-3 aspect-square">
+                <div className="col-span-1 md:col-span-3 ">
                   <div className="h-full rounded-lg relative overflow-hidden bg-gray-200">
                     <Image
                       src="https://github.com/shadcn.png"
@@ -208,7 +230,7 @@ export default function CreateProductPage() {
                 </div>
 
                 {/* Right big image - spans 5 columns */}
-                <div className="col-span-1 md:col-span-3 aspect-square">
+                <div className="col-span-1 md:col-span-3 ">
                   <div className="h-full rounded-lg relative overflow-hidden bg-gray-200">
                     <Image
                       src="https://github.com/shadcn.png"
@@ -512,11 +534,20 @@ export default function CreateProductPage() {
                       Available quantity
                     </label>
                     <div className="pt-3 px-4 md:px-7">
-                      <input
-                        type="text"
-                        className="w-full px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        defaultValue="1000 Pieces"
-                      />
+                      <div className="flex items-center relative">
+                        <input
+                          type="text"
+                          className="flex-1 px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+                          placeholder="1000"
+                        />
+                        <span
+                          className={
+                            "absolute top-1/2 -translate-y-1/2 right-3 md:right-0"
+                          }
+                        >
+                          Pieces
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -567,21 +598,52 @@ export default function CreateProductPage() {
                             <div className="flex items-center mb-4">
                               <select
                                 value={option.name}
-                                onChange={(e) =>
-                                  handleOptionNameChange(
-                                    option.id,
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  if (e.target.value === "CREATE_NEW") {
+                                    // Trigger custom option creation
+                                    const customName = prompt(
+                                      "Enter custom option name:"
+                                    );
+                                    if (customName && customName.trim()) {
+                                      // Add to available options for future use
+                                      if (
+                                        !availableOptions.includes(
+                                          customName.trim()
+                                        )
+                                      ) {
+                                        setAvailableOptions((prev) => [
+                                          ...prev,
+                                          customName.trim(),
+                                        ]);
+                                      }
+                                      handleOptionNameChange(
+                                        option.id,
+                                        customName.trim()
+                                      );
+                                    }
+                                  } else {
+                                    handleOptionNameChange(
+                                      option.id,
+                                      e.target.value
+                                    );
+                                  }
+                                }}
                                 className="w-full p-2 border text-gray-400 border-gray-300 rounded-lg text-sm md:text-base"
                               >
                                 <option value="" disabled>
                                   Select an option
                                 </option>
-                                <option value="Color">Color</option>
-                                <option value="Size">Size</option>
-                                <option value="Material">Material</option>
-                                <option value="Style">Style</option>
+                                {availableOptions.map((optionName) => (
+                                  <option key={optionName} value={optionName}>
+                                    {optionName}
+                                  </option>
+                                ))}
+                                <option
+                                  value="CREATE_NEW"
+                                  className="text-blue-500 font-medium"
+                                >
+                                  + Create new option
+                                </option>
                               </select>
                               <button
                                 onClick={() => deleteOption(option.id)}
@@ -590,12 +652,13 @@ export default function CreateProductPage() {
                                 <Trash2 size={18} />
                               </button>
                             </div>
-
-                            <div className="mb-2">
-                              <label className="block text-xs md:text-sm text-gray-500">
-                                Option values
-                              </label>
-                            </div>
+                            {option.values.length > 0 && (
+                              <div className="mb-2">
+                                <label className="block text-xs md:text-sm text-gray-500">
+                                  Option values
+                                </label>
+                              </div>
+                            )}
 
                             {option.values.map((value, index) => (
                               <div
@@ -730,10 +793,12 @@ export default function CreateProductPage() {
                       </label>
                       <input
                         type="text"
+                        value={seoPageTitle}
+                        onChange={(e) => setSeoPageTitle(e.target.value)}
                         className="w-full px-3 py-1 md:px-4 md:py-2 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        [Number] of 70 characters used
+                        [{seoPageTitle.length}] of 70 characters used
                       </p>
                     </div>
 
@@ -743,10 +808,12 @@ export default function CreateProductPage() {
                       </label>
                       <input
                         type="text"
+                        value={seoMetaDescription}
+                        onChange={(e) => setSeoMetaDescription(e.target.value)}
                         className="w-full px-3 py-1 md:px-4 md:py-2 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        [Number] of 320 characters used
+                        [{seoMetaDescription.length}] of 320 characters used
                       </p>
                     </div>
 

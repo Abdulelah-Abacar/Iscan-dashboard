@@ -1,507 +1,62 @@
 "use client";
-import {
-  Filter,
-  RefreshCcw,
-  Search,
-  X,
-  Calendar,
-  Tag,
-  Percent,
-  DollarSign,
-  Package,
-  Gift,
-  Settings,
-  ChevronRight,
-  ChevronLeft,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
 
-export default function Discount() {
-  const tabs = ["All", "Active", "Scheduled", "Expired"];
-  const [currentView, setCurrentView] = useState("closed"); // 'closed', 'select' or 'create'
-  const [selectedDiscountType, setSelectedDiscountType] = useState(null);
-  const [selectedTab, setSelectedTab] = useState("All");
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedDiscounts, setSelectedDiscounts] = useState([]);
-  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
-  const [discounts, setDiscounts] = useState([
-    {
-      id: 1,
-      title: "SHIPFREE",
-      description: "Free shipping on all products",
-      location: "For all countries",
-      status: "Expired",
-      type: "Free shipping",
-      used: 3,
-    },
-    {
-      id: 2,
-      title: "SUMMER20",
-      description: "20% off summer collection",
-      location: "For all countries",
-      status: "Active",
-      type: "Percentage",
-      used: 12,
-    },
-    {
-      id: 3,
-      title: "WELCOME10",
-      description: "$10 off first order",
-      location: "For new customers",
-      status: "Active",
-      type: "Fixed amount",
-      used: 8,
-    },
-    {
-      id: 4,
-      title: "B2G1",
-      description: "Buy 2 get 1 free",
-      location: "Selected products",
-      status: "Scheduled",
-      type: "Buy X get Y",
-      used: 0,
-    },
-  ]);
-  const [formData, setFormData] = useState({
-    method: "discount-code",
-    discountCode: "",
-    discountTitle: "",
-    valueType: "percentage",
-    value: "",
-    appliesTo: "all-products",
-    selectedCollections: [],
-    selectedProducts: [],
-    minimumRequirement: "none",
-    minimumAmount: "",
-    minimumQuantity: "",
-    combinations: {
-      productDiscounts: false,
-      orderDiscounts: false,
-      shippingDiscounts: false,
-    },
-    hasStartDate: true,
-    startDate: "",
-    startTime: "",
-    hasEndDate: false,
-    endDate: "",
-    endTime: "",
-    status: "Active", // Default status for new discounts
-  });
+import { ArrowLeft,
+    Calendar,
+    Tag,
+    Percent,
+    DollarSign,
+    Package,
+    Gift,
+    Settings, } from 'lucide-react'
+import Link from 'next/link'
+import React, { useState } from 'react'
 
-  const discountTypes = [
-    {
-      title: "Amount off products",
-      subtitle: "Product discount",
-      type: "Fixed amount",
-    },
-    {
-      title: "Amount off order",
-      subtitle: "Order discount",
-      type: "Fixed amount",
-    },
-    {
-      title: "Buy X get Y",
-      subtitle: "Product discount",
-      type: "Buy X get Y",
-    },
-    {
-      title: "Free shipping",
-      subtitle: "Shipping discount",
-      type: "Free shipping",
-    },
-  ];
-
-  const handleDiscountModalOpen = () => {
-    setIsDiscountModalOpen(!isDiscountModalOpen);
-  };
-
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab);
-  };
-
-  const handleSelectAll = () => {
-    setSelectAll(!selectAll);
-    if (!selectAll) {
-      setSelectedDiscounts([...Array(discounts.length).keys()]);
-    } else {
-      setSelectedDiscounts([]);
-    }
-  };
-
-  const handleSelectDiscount = (index) => {
-    if (selectedDiscounts.includes(index)) {
-      setSelectedDiscounts(selectedDiscounts.filter((i) => i !== index));
-    } else {
-      setSelectedDiscounts([...selectedDiscounts, index]);
-    }
-  };
-
-  const handleDiscountSelect = (discountType) => {
-    setSelectedDiscountType(discountType);
-    setCurrentView("create");
-    setIsDiscountModalOpen(false);
-  };
-
-  const handleClose = () => {
-    setCurrentView("closed");
-    setSelectedDiscountType(null);
-    // Reset form data when closing
-    setFormData({
-      method: "discount-code",
-      discountCode: "",
-      discountTitle: "",
-      valueType: "percentage",
-      value: "",
-      appliesTo: "all-products",
-      selectedCollections: [],
-      selectedProducts: [],
-      minimumRequirement: "none",
-      minimumAmount: "",
-      minimumQuantity: "",
-      combinations: {
-        productDiscounts: false,
-        orderDiscounts: false,
-        shippingDiscounts: false,
-      },
-      hasStartDate: true,
-      startDate: "",
-      startTime: "",
-      hasEndDate: false,
-      endDate: "",
-      endTime: "",
-      status: "Active",
+function page({searchParams}: {searchParams: {discountType: string}}) {
+    const {discountType} = React.use(searchParams);
+    const [formData, setFormData] = useState({
+        method: "discount-code",
+        discountCode: "",
+        discountTitle: "",
+        valueType: "percentage",
+        value: "",
+        appliesTo: "all-products",
+        minimumRequirement: "none",
+        hasEndDate: false,
+        startDate: "",
+        startTime: "",
+        endDate: "",
+        endTime: "",
+        combinations: {
+            productDiscounts: false,
+            orderDiscounts: false,
+            shippingDiscounts: false,
+        },
     });
-  };
 
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleCombinationChange = (type, checked) => {
-    setFormData((prev) => ({
-      ...prev,
-      combinations: {
-        ...prev.combinations,
-        [type]: checked,
-      },
-    }));
-  };
-
-  const handleBack = () => {
-    setCurrentView("select");
-  };
-
-  const handleSave = () => {
-    // Generate a new discount object from form data
-    const newDiscount = {
-      id: discounts.length + 1,
-      title:
-        formData.method === "discount-code"
-          ? formData.discountCode
-          : formData.discountTitle,
-      description: `${
-        formData.valueType === "percentage"
-          ? `${formData.value}% off`
-          : `$${formData.value} off`
-      } ${
-        formData.appliesTo === "all-products"
-          ? "all products"
-          : formData.appliesTo === "specific-collections"
-          ? "selected collections"
-          : "selected products"
-      }`,
-      location: "For all countries", // Default for simplicity
-      status: formData.status,
-      type: selectedDiscountType?.type || "Discount",
-      used: 0,
+    const handleInputChange = (field: string, value: string) => {
+        setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-    // Add the new discount to the list
-    setDiscounts([newDiscount, ...discounts]);
-
-    // Close the form
-    handleClose();
-  };
-
-  // Filter discounts based on selected tab
-  const filteredDiscounts = discounts.filter((discount) => {
-    if (selectedTab === "All") return true;
-    return discount.status.toLowerCase() === selectedTab.toLowerCase();
-  });
-
   return (
     <>
-      <div className="flex items-center relative">
-        <Image
-          src={"/hand_drawn_arrow.webp"}
-          alt="arrow icon"
-          width={70}
-          height={75}
-          className="hidden lg:block absolute -left-13 top-5"
+        <div className="flex justify-between items-center mb-4">
+    <div className={`flex items-center gap-4`}>
+      <Link
+        href="/discounts"
+        className="p-2 bg-white rounded-full group hover:scale-105 transition-all duration-700"
+      >
+        <ArrowLeft
+          size={30}
+          className="text-gray-600 group-hover:text-black"
         />
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal">Discount</h1>
-      </div>
-      
-      {/* Discount Modal */}
-      {isDiscountModalOpen && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 flex items-center justify-center p-4">
-          <div className="bg-gray-200 rounded-3xl space-y-6 sm:space-y-8 p-4 sm:p-6 text-center relative max-w-md w-full mx-4">
-            <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-              <h2 className="text-xl sm:text-2xl font-medium">Select discount type</h2>
-              <button
-                onClick={handleDiscountModalOpen}
-                className="p-1 rounded-full cursor-pointer bg-white hover:text-gray-600 transition-colors flex-shrink-0"
-              >
-                <X size={20} className="sm:w-6 sm:h-6" />
-              </button>
-            </div>
-            
-            {/* Content */}
-            <div className="space-y-3">
-              {discountTypes.map((discount, index) => (
-                <Link
-                  key={index}
-                  href={`/discounts/create?discountType=${discount.type.toLowerCase().replace(" ", "-")}`}
-                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg cursor-pointer text-left group hover:bg-gray-100 transition-colors"
-                >
-                  <div className="flex items-center space-x-3 flex-1 min-w-0">
-                    <div className="flex-1 min-w-0">
-                      <div className="text-lg sm:text-xl font-medium text-gray-900 group-hover:text-gray-700 truncate">
-                        {discount.title}
-                      </div>
-                      <div className="text-sm sm:text-base text-gray-500 line-clamp-2">
-                        {discount.subtitle}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-gray-400 group-hover:text-gray-600 flex-shrink-0 ml-2">
-                    <ChevronRight size={20} className="sm:w-6 sm:h-6" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {currentView === "create" && (
-        <CreateDiscountForm
-          handleBack={handleBack}
-          handleClose={handleClose}
-          handleSave={handleSave}
-          handleInputChange={handleInputChange}
-          handleCombinationChange={handleCombinationChange}
-          formData={formData}
-          selectedDiscountType={selectedDiscountType}
-        />
-      )}
-      
-      <section className="px-2 sm:px-4 mt-5 w-full max-w-full">
-        <div className="relative bg-white rounded-2xl sm:rounded-3xl lg:rounded-4xl pb-6 sm:pb-10 overflow-hidden">
-          {/* Header with tabs */}
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 sm:p-4 space-y-4 sm:space-y-0">
-            {/* Tabs - Scrollable on mobile */}
-            <div className="flex space-x-1 sm:space-x-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  className={`px-4 sm:px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 ${
-                    selectedTab === tab ? "bg-gray-100" : "hover:bg-gray-50"
-                  }`}
-                  onClick={() => handleTabClick(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            
-            {/* Action buttons */}
-            <div className="flex items-center justify-end space-x-2 flex-shrink-0">
-              {/* Hide some buttons on mobile */}
-              <button className="hidden sm:flex p-2 px-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
-                <Filter className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button className="hidden sm:flex p-2 px-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
-                <RefreshCcw className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button className="p-2 px-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
-                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
-              </button>
-              <button
-                onClick={handleDiscountModalOpen}
-                className="px-3 sm:px-4 py-2 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-full transition-colors text-sm sm:text-base whitespace-nowrap"
-              >
-                <span className="hidden sm:inline">Create Discount</span>
-                <span className="sm:hidden">Create</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Table Container */}
-          <div className="overflow-x-auto">
-            <div className="min-w-full">
-              {/* Desktop Table */}
-              <div className="hidden md:block">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="text-center text-gray-500 bg-gray-100">
-                      <th className="py-3 pl-4 pr-2 font-normal w-12">
-                        <input
-                          type="checkbox"
-                          className="rounded text-black focus:ring-black accent-black h-4 w-4"
-                          checked={selectAll}
-                          onChange={handleSelectAll}
-                        />
-                      </th>
-                      <th className="py-3 px-4 font-normal text-left text-base min-w-0">
-                        Title
-                      </th>
-                      <th className="py-3 px-4 font-normal text-base w-24">Status</th>
-                      <th className="py-3 px-4 font-normal text-base w-24">Type</th>
-                      <th className="py-3 px-4 font-normal text-base w-20">Uses</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredDiscounts.map((discount, index) => (
-                      <tr key={index} className="hover:bg-gray-50 border-b border-gray-100">
-                        <td className="py-3 pl-4 pr-2 text-center">
-                          <input
-                            type="checkbox"
-                            className="rounded text-black focus:ring-black accent-black h-4 w-4"
-                            checked={selectedDiscounts.includes(index)}
-                            onChange={() => handleSelectDiscount(index)}
-                          />
-                        </td>
-                        <td className="py-3 px-4 text-left min-w-0">
-                          <div className="flex flex-col">
-                            <div className="text-base font-medium text-gray-900 truncate">
-                              {discount.title}
-                            </div>
-                            <div className="text-sm text-gray-500 truncate">
-                              {discount.description}
-                            </div>
-                            <div className="text-sm text-gray-400 truncate">
-                              • {discount.location}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs sm:text-sm inline-flex items-center ${
-                              discount.status === "Active"
-                                ? "bg-green-500 text-white"
-                                : discount.status === "Scheduled"
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-400 text-white"
-                            }`}
-                          >
-                            {discount.status}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-center text-sm">{discount.type}</td>
-                        <td className="py-3 px-4 text-center text-sm">{discount.used}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Mobile Card View */}
-              <div className="md:hidden space-y-3 p-4">
-                {filteredDiscounts.map((discount, index) => (
-                  <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <input
-                          type="checkbox"
-                          className="rounded text-black focus:ring-black accent-black h-4 w-4 mt-1 flex-shrink-0"
-                          checked={selectedDiscounts.includes(index)}
-                          onChange={() => handleSelectDiscount(index)}
-                        />
-                        <div className="flex-1 min-w-0">
-                          <div className="text-base font-medium text-gray-900 truncate">
-                            {discount.title}
-                          </div>
-                          <div className="text-sm text-gray-500 line-clamp-2 mt-1">
-                            {discount.description}
-                          </div>
-                          <div className="text-sm text-gray-400 truncate mt-1">
-                            • {discount.location}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-4">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs inline-flex items-center ${
-                            discount.status === "Active"
-                              ? "bg-green-500 text-white"
-                              : discount.status === "Scheduled"
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-400 text-white"
-                          }`}
-                        >
-                          {discount.status}
-                        </span>
-                        <span className="text-gray-600">{discount.type}</span>
-                      </div>
-                      <span className="text-gray-600 font-medium">{discount.used} uses</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
-
-function CreateDiscountForm({
-  handleClose,
-  handleBack,
-  handleSave,
-  handleInputChange,
-  handleCombinationChange,
-  formData,
-  selectedDiscountType,
-}) {
-  return (
-    <>
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 flex items-center justify-center max-h-screen max-w-screen">
-        <div className="bg-gray-100 rounded-xl shadow-2xl w-full max-w-4xl mx-4 md:mx-auto max-h-[95vh] overflow-hidden">
-          {/* Header */}
-          <div className="flex items-center justify-between p-2 bg-gray-100 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={handleBack}
-                className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors p-1 rounded-lg hover:bg-gray-100"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <h2 className="text-lg md:text-xl font-semibold text-gray-900">
-                Create {selectedDiscountType?.title.toLowerCase()} discount
-              </h2>
-            </div>
-            <button
-              onClick={handleClose}
-              className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors p-1 rounded-lg hover:bg-gray-100"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="overflow-y-auto max-h-[calc(95vh-140px)] p-4 md:p-6 space-y-4 md:space-y-6">
+      </Link>
+      <h1 className="text-3xl">Create discount</h1>
+    </div>
+  </div>
+  <section className='bg-gray-200 rounded-4xl space-y-8 p-4'>
+    <h1 className='text-2xl'>{discountType}</h1>
+    {/* Content */}
+    <div className="overflow-y-auto max-h-[calc(95vh-140px)] p-4 md:p-6 space-y-4 md:space-y-6 no-scrollbar">
             {/* Method Section */}
             <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-gray-200">
               <h3 className="text-md md:text-lg font-semibold text-gray-900 flex items-center mb-4 md:mb-6">
@@ -914,24 +469,24 @@ function CreateDiscountForm({
               </div>
             </div>
           </div>
-
           {/* Footer */}
-          <div className="border-t border-gray-200 px-4 md:px-6 py-3 md:py-4 flex flex-col-reverse sm:flex-row justify-end space-y-2 sm:space-y-0 space-x-0 sm:space-x-3 bg-gray-100">
+          <div className="border-t border-gray-200 px-4 md:px-6 py-3 md:py-4 flex gap-2 flex-col-reverse sm:flex-row justify-end space-y-2 sm:space-y-0 space-x-0 sm:space-x-3">
             <button
-              onClick={handleBack}
+            //   onClick={handleBack}
               className="px-4 md:px-6 py-2 md:py-3 text-sm cursor-pointer font-medium text-gray-700 bg-gray-100 border-2 border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black transition-colors"
             >
               Cancel
             </button>
             <button
-              onClick={handleSave}
+            //   onClick={handleSave}
               className="px-4 md:px-6 py-2 md:py-3 text-sm cursor-pointer font-medium text-white bg-black border-2 border-black rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
             >
               Save discount
             </button>
           </div>
-        </div>
-      </div>
-    </>
-  );
+  </section>
+  </>
+  )
 }
+
+export default page

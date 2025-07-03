@@ -32,7 +32,7 @@ export function Header() {
     /^\/orders\/[^\/]+$/, // matches /orders/[id]
     /^\/clients\/[^\/]+$/, // matches /clients/[id]
     /^\/products\/create$/, // matches /product/create
-    /^\/create-post$/, // matches /create-post
+    /^\/blogs\/create$/, // matches /blogs/create
   ];
 
   // Check if current route matches any hidden routes
