@@ -102,6 +102,16 @@ const StatCard = ({ label, value, className = "", currency = false }) => (
 export default function Analytics() {
   const [isLiabilitiesModelOpen, setIsLiabilitiesModelOpen] = useState(false);
   const [isSadacaModelOpen, setIsSadacaModelOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');const [sadacaData, setSadacaData] = useState([
+    { date: '2024-01-15', amount: '100' },
+    { date: '2024-01-20', amount: '250' },
+    { date: '2024-01-25', amount: '150' },
+    { date: "20.04.2025", amount: "90" },
+    { date: "20.04.2025", amount: "90" },
+    { date: "20.04.2025", amount: "90" },
+    { date: "20.04.2025", amount: "90" },
+    { date: "20.04.2025", amount: "90" },
+  ]);
 
   const miniChartData = [
     { value: 20 },
@@ -116,16 +126,6 @@ export default function Analytics() {
     { value: 42 },
     { value: 48 },
     { value: 50 },
-  ];
-
-  const sadacaData = [
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
-    { date: "20.04.2025", amount: "90" },
   ];
 
   const salesData = [
@@ -174,6 +174,29 @@ export default function Analytics() {
     setIsSadacaModelOpen(!isSadacaModelOpen);
   };
 
+  const handleSave = () => {
+    if (inputValue.trim() && !isNaN(inputValue) && parseFloat(inputValue) > 0) {
+      const newEntry = {
+        date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+        amount: parseFloat(inputValue).toString()
+      };
+      
+      // Add new entry to the beginning of the array to show latest first
+      setSadacaData([newEntry, ...sadacaData]);
+      
+      // Clear the input
+      setInputValue('');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    // Only allow numbers and decimal point
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setInputValue(value);
+    }
+  };
+
   return (
     <>
       <div className="flex items-center relative">
@@ -193,7 +216,7 @@ export default function Analytics() {
               onClick={handleLiabilitiesModelClose}
               className="absolute cursor-pointer p-1 bg-white rounded-full top-4 right-4"
             >
-              <X size={12} />
+              <X size={24} />
             </button>
             <h1 className="text-2xl font-medium">Financial Liabilities</h1>
             <div className="w-fit flex justify-self-center justify-center items-center gap-2 py-2 px-8 bg-white rounded-lg">
@@ -218,53 +241,65 @@ export default function Analytics() {
       {isSadacaModelOpen && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 flex items-center justify-center">
           <div className="bg-gray-200 rounded-3xl py-8 px-8 text-center relative max-w-2xl w-full mx-4 mb-28 md:mb-0">
-            <button
-              onClick={handleSadacaModelClose}
-              className="absolute cursor-pointer p-1 bg-white rounded-full top-4 right-4 hover:bg-white/70 transition-colors"
-            >
-              <X size={20} />
-            </button>
+      <button
+        onClick={handleSadacaModelClose}
+        className="absolute cursor-pointer p-1 bg-white rounded-full top-4 right-4 hover:bg-white/70 transition-colors"
+      >
+        <X size={24} />
+      </button>
 
-            <h1 className="text-3xl mb-4">Sadaca</h1>
+      <h1 className="text-3xl mb-4">Sadaca</h1>
 
-            <div className="flex flex-col md:flex-row mb-4 justify-center items-center gap-4">
-              <div className="flex w-full md:w-1/3 relative justify-center items-center gap-2">
-                <SaudiRiyal
-                  size={24}
-                  className="absolute top-1/2 -translate-y-1/2 left-8"
-                />
-                <input
-                  type="text"
-                  className="text-lg w-full text-center py-3 px-4 bg-white rounded-full outline-none border-none"
-                />
-              </div>
-              <button className="rounded-full py-2 px-5 text-white bg-cyan-500 cursor-pointer w-full md:w-auto">
-                Save
-              </button>
+      <div className="flex flex-col md:flex-row mb-4 justify-center items-center gap-4">
+        <div className="flex w-full md:w-1/3 relative justify-center items-center gap-2">
+          <SaudiRiyal
+            size={24}
+            className="absolute top-1/2 -translate-y-1/2 left-4"
+          />
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            className="text-lg w-full text-center py-3 px-4 bg-white rounded-full outline-none border-none pl-8"
+          />
+        </div>
+        <button 
+          onClick={handleSave}
+          className="rounded-full py-2 px-5 text-white bg-cyan-500 cursor-pointer w-full md:w-auto hover:bg-cyan-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          disabled={!inputValue.trim() || isNaN(inputValue) || parseFloat(inputValue) <= 0}
+        >
+          Save
+        </button>
+      </div>
+
+      <div className="bg-white rounded-4xl w-full md:w-4/5 mx-auto">
+        <div className="grid grid-cols-2 bg-gray-100 py-3 px-6 rounded-full">
+          <div className="text-left">Date</div>
+          <div className="text-right">Amount</div>
+        </div>
+
+        <div className="max-h-64 overflow-y-auto no-scrollbar">
+          {sadacaData.length === 0 ? (
+            <div className="py-8 text-gray-500">
+              No sadaca entries yet. Add your first entry above!
             </div>
-
-            <div className="bg-white rounded-4xl w-full md:w-4/5 mx-auto">
-              <div className="grid grid-cols-2 bg-gray-100 py-3 px-6 rounded-full">
-                <div className="text-left">Date</div>
-                <div className="text-right">Amount</div>
+          ) : (
+            sadacaData.map((item, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-2 py-3 px-6 hover:bg-gray-50 transition-colors"
+              >
+                <div className="text-left">{item.date}</div>
+                <div className="text-right flex items-center justify-end gap-2">
+                  <SaudiRiyal size={24} />
+                  <span className="text-2xl">{item.amount}</span>
+                </div>
               </div>
-
-              <div className="max-h-64 overflow-y-auto no-scrollbar">
-                {sadacaData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-2 py-3 px-6 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="text-left">{item.date}</div>
-                    <div className="text-right flex items-center justify-end gap-2">
-                      <SaudiRiyal size={24} />{" "}
-                      <span className="text-2xl">{item.amount}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
         </div>
       )}
       <section className="bg-gray-200 p-3 md:p-5 rounded-4xl mt-5 mb-24 md:mb-0">

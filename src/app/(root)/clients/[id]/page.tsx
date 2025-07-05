@@ -13,10 +13,9 @@ import {
   Hash,
   Paperclip,
   Pencil,
-  X,
-  Verified,
-  CheckCircle2Icon,
   SaudiRiyal,
+  Check,
+  X,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,7 +27,6 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
-import { VerifiedIcon } from "@/components/clients/VerifiedIcon";
 import VerificationModel from "@/components/clients/VerificationModel";
 import SuccessModel from "@/components/clients/SuccessModel";
 import StoreCreditModel from "@/components/clients/StoreCreditModel";
@@ -37,6 +35,8 @@ import StoreCreditBalanceModel from "@/components/clients/StoreCreditBalanceMode
 
 export default function ClientProfile() {
   const [comment, setComment] = useState("");
+  const [copied, setCopied] = useState(null);
+  const [showAllOrders, setShowAllOrders] = useState(false);
   const [isVerificationModelOpen, setIsVerificationModelOpen] = useState(false);
   const [isStoreCreditModelOpen, setIsStoreCreditModelOpen] = useState(false);
   const [isStoreCreditSummeryModelOpen, setIsStoreCreditSummeryModelOpen] =
@@ -73,10 +73,10 @@ export default function ClientProfile() {
 
   const verificationLevels = [
     { id: "none", component: null, label: "No verification" },
-    { id: "government", fill: "blue", label: "Government verification" },
-    { id: "company", fill: "green", label: "Company verification" },
-    { id: "paid", fill: "gray", label: "Paid user verification" },
-    { id: "admin", fill: "yellow", label: "Platform admin verification" },
+    { id: "admin", fill: "yellow", label: "Platform admins verification" },
+    { id: "charity", fill: "green", label: "Charity verification" },
+    { id: "government", fill: "gray", label: "Government verification" },
+    { id: "famous", fill: "blue", label: "Famous verification" },
   ];
 
   const handleOpenStoreCreditModel = () =>
@@ -162,6 +162,17 @@ export default function ClientProfile() {
     { id: "#4130", date: "22.4.2025", total: 999, status: "Completed" },
   ];
 
+  const allOrders = [
+    ...orders,
+    { id: '006', date: '2024-01-10', total: '198.50', status: 'Completed' },
+    { id: '007', date: '2024-01-09', total: '78.25', status: 'Pending' },
+    { id: '008', date: '2024-01-08', total: '156.75', status: 'Completed' },
+    { id: '009', date: '2024-01-07', total: '92.00', status: 'Refund' },
+    { id: '010', date: '2024-01-06', total: '234.50', status: 'Completed' },
+    { id: '011', date: '2024-01-05', total: '167.25', status: 'Pending' },
+    { id: '012', date: '2024-01-04', total: '89.75', status: 'Completed' },
+  ];
+
   const transactions = [
     {
       date: "8 May 2025 at 9:08 am",
@@ -221,6 +232,8 @@ export default function ClientProfile() {
     },
   ];
 
+  const handleShowAllOrders = () => setShowAllOrders(!showAllOrders)
+
   const handleVerificationSelect = (id) => {
     setSelectedVerification(id);
   };
@@ -266,9 +279,46 @@ export default function ClientProfile() {
     router.back();
   };
 
+  const copyToClipboard = async (text, field) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(field);
+      // Reset the copied state after 2 seconds
+      setTimeout(() => setCopied(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+      // Fallback method for older browsers
+      fallbackCopyTextToClipboard(text, field);
+    }
+  };
+
+  // Fallback method for browsers that don't support navigator.clipboard
+  const fallbackCopyTextToClipboard = (text, field) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+      setCopied(field);
+      setTimeout(() => setCopied(null), 2000);
+    } catch (err) {
+      console.error("Fallback: Oops, unable to copy", err);
+    }
+
+    document.body.removeChild(textArea);
+  };
+
   return (
     <>
-      <div className={`flex items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8`}>
+      <div
+        className={`flex items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8`}
+      >
         <div className="flex items-center gap-2 sm:gap-4">
           <Link
             href="/clients"
@@ -279,7 +329,9 @@ export default function ClientProfile() {
               className="text-gray-600 group-hover:text-black sm:w-[30px] sm:h-[30px]"
             />
           </Link>
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-medium">Back to Clients</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-medium">
+            Back to Clients
+          </h1>
         </div>
         <div
           className="flex items-center cursor-pointer"
@@ -295,6 +347,131 @@ export default function ClientProfile() {
           />
         </div>
       </div>
+
+      {showAllOrders && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 flex items-center justify-center">
+          <div className="bg-white rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b">
+              <h2 className="text-xl font-semibold text-gray-900">All Orders</h2>
+              <button
+                onClick={handleShowAllOrders}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="overflow-auto max-h-[calc(90vh-80px)]">
+              {/* Desktop Table */}
+              <div className="hidden sm:block">
+                <table className="w-full">
+                  <thead className="sticky top-0 bg-white">
+                    <tr className="text-gray-400 uppercase bg-gray-100">
+                      <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                        ID
+                      </th>
+                      <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                        DATE
+                      </th>
+                      <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                        TOTAL
+                      </th>
+                      <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                        STATUS
+                      </th>
+                      <th className="py-3 text-center font-medium text-xs lg:text-sm"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allOrders.map((order, index) => (
+                      <tr key={index} className="border-b border-gray-50">
+                        <td className="py-3 text-center text-sm">
+                          {order.id}
+                        </td>
+                        <td className="py-3 text-center text-sm">
+                          {order.date}
+                        </td>
+                        <td className="py-3 text-center">
+                          <div className="flex items-center justify-center gap-1 text-sm">
+                            <SaudiRiyal size={22} /> {order.total}
+                          </div>
+                        </td>
+                        <td className="py-3 text-center">
+                          <div className="flex justify-center">
+                            <span
+                              className={`inline-flex items-center justify-center px-3 lg:px-4 py-1 rounded-full text-xs font-medium min-w-[80px] lg:w-24 ${
+                                order.status === "Completed"
+                                  ? "bg-green-100 text-green-800"
+                                  : order.status === "Pending"
+                                  ? "bg-amber-100 text-amber-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {order.status}{" "}
+                              {order.status === "Completed" && (
+                                <CheckCircle size={14} className="ml-1" />
+                              )}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-3 text-center">
+                          <button className="flex justify-center w-full">
+                            <Info size={20} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="sm:hidden space-y-3 p-4">
+                {allOrders.map((order, index) => (
+                  <div key={index} className="bg-gray-50 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          Order #{order.id}
+                        </p>
+                        <p className="text-sm text-gray-500">{order.date}</p>
+                      </div>
+                      <button>
+                        <Info size={20} className="text-gray-400" />
+                      </button>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-1">
+                        <SaudiRiyal size={22} />
+                        <span className="font-medium">{order.total}</span>
+                      </div>
+                      <span
+                        className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium ${
+                          order.status === "Completed"
+                            ? "bg-green-100 text-green-800"
+                            : order.status === "Pending"
+                            ? "bg-amber-100 text-amber-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {order.status}
+                        {order.status === "Completed" && (
+                          <CheckCircle size={12} className="ml-1" />
+                        )}
+                        {order.status === "Refund" && (
+                          <span className="ml-1">▼</span>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Verification Step Model */}
       {isVerificationModelOpen && (
@@ -383,21 +560,23 @@ export default function ClientProfile() {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between gap-2 sm:gap-4 lg:gap-12 bg-white rounded-full py-2 px-3 sm:px-6 lg:px-8">
-                  <div className="flex-1 text-center min-w-0">
+                <div className="flex items-center justify-between gap-2 flex-1 bg-white rounded-full py-2 px-3 sm:px-6 lg:px-8">
+                  <div className="flex-1 text-center">
                     <p className="text-xs text-gray-600">Amount spent</p>
                     <p className="text-xs sm:text-sm w-full font-bold flex items-center justify-center bg-gray-200 rounded-full px-2 sm:px-3 py-1 mt-1">
                       <SaudiRiyal size={17} className="flex-shrink-0" />
-                      <span className="ml-1 truncate">{client.amountSpent}</span>
+                      <span className="ml-1 truncate">
+                        {client.amountSpent}
+                      </span>
                     </p>
                   </div>
-                  <div className="flex-1 text-center min-w-0">
+                  <div className="flex-1 text-center">
                     <p className="text-xs text-gray-600">Orders</p>
                     <p className="text-xs sm:text-sm w-full font-bold flex items-center justify-center bg-gray-200 rounded-full px-2 sm:px-3 py-1 mt-1">
                       {client.orders}
                     </p>
                   </div>
-                  <div className="flex-1 text-center min-w-0">
+                  <div className="flex-1 text-center">
                     <p className="text-xs text-gray-600">Customer since</p>
                     <p className="text-xs sm:text-sm w-full font-bold flex items-center justify-center bg-gray-200 rounded-full px-2 sm:px-3 py-1 mt-1">
                       <span className="truncate">{client.customerSince}</span>
@@ -416,17 +595,27 @@ export default function ClientProfile() {
                         <th className="py-3 text-center font-medium rounded-l-xl text-xs lg:text-sm">
                           ID
                         </th>
-                        <th className="py-3 text-center font-medium text-xs lg:text-sm">DATE</th>
-                        <th className="py-3 text-center font-medium text-xs lg:text-sm">TOTAL</th>
-                        <th className="py-3 text-center font-medium text-xs lg:text-sm">STATUS</th>
+                        <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                          DATE
+                        </th>
+                        <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                          TOTAL
+                        </th>
+                        <th className="py-3 text-center font-medium text-xs lg:text-sm">
+                          STATUS
+                        </th>
                         <th className="py-3 text-center font-medium rounded-r-xl text-xs lg:text-sm"></th>
                       </tr>
                     </thead>
                     <tbody>
                       {orders.map((order, index) => (
                         <tr key={index}>
-                          <td className="py-3 text-center text-sm">{order.id}</td>
-                          <td className="py-3 text-center text-sm">{order.date}</td>
+                          <td className="py-3 text-center text-sm">
+                            {order.id}
+                          </td>
+                          <td className="py-3 text-center text-sm">
+                            {order.date}
+                          </td>
                           <td className="py-3 text-center">
                             <div className="flex items-center justify-center gap-1 text-sm">
                               <SaudiRiyal size={22} /> {order.total}
@@ -445,9 +634,9 @@ export default function ClientProfile() {
                                 {order.status === "Completed" && (
                                   <CheckCircle size={14} className="ml-1" />
                                 )}
-                                {order.status === "Refund" && (
+                                {/* {order.status === "Refund" && (
                                   <span className="ml-1">▼</span>
-                                )}
+                                )} */}
                               </span>
                             </div>
                           </td>
@@ -468,7 +657,9 @@ export default function ClientProfile() {
                     <div key={index} className="bg-gray-50 rounded-lg p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <p className="font-medium text-gray-900">Order #{order.id}</p>
+                          <p className="font-medium text-gray-900">
+                            Order #{order.id}
+                          </p>
                           <p className="text-sm text-gray-500">{order.date}</p>
                         </div>
                         <button>
@@ -501,7 +692,7 @@ export default function ClientProfile() {
                 </div>
 
                 <div className="mt-4 text-center px-4">
-                  <button className="px-4 py-2 w-full sm:w-auto rounded-full bg-gray-100 cursor-pointer text-sm">
+                  <button onClick={handleShowAllOrders} className="px-4 py-2 w-full sm:w-auto rounded-full bg-gray-100 cursor-pointer text-sm">
                     See all orders
                   </button>
                 </div>
@@ -585,7 +776,10 @@ export default function ClientProfile() {
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <button className="p-1 hover:text-gray-700">
-                                  <Paperclip size={18} className="sm:w-5 sm:h-5" />
+                                  <Paperclip
+                                    size={18}
+                                    className="sm:w-5 sm:h-5"
+                                  />
                                 </button>
                               </TooltipTrigger>
                               <TooltipContent>
@@ -611,7 +805,10 @@ export default function ClientProfile() {
                 <div className="space-y-6 sm:space-y-8 lg:space-y-10 relative">
                   <div className="absolute -top-[15%] left-6 sm:left-9 z-10 w-0.5 h-[120%] bg-black" />
                   {timeline.map((entry, index) => (
-                    <div key={index} className="w-[95%] md:w-full lg:w-3/5 ml-3 relative z-20">
+                    <div
+                      key={index}
+                      className="w-[95%] md:w-full lg:w-3/5 ml-3 relative z-20"
+                    >
                       {entry.type === "admin" ? (
                         <div className="flex items-start justify-between gap-3 sm:gap-4 pt-2 pb-1 px-2 md:px-4 bg-white rounded-full">
                           <div className="flex gap-2 items-center min-w-0 flex-1">
@@ -636,7 +833,9 @@ export default function ClientProfile() {
                         </div>
                       ) : (
                         <div className="flex items-start justify-between gap-3 sm:gap-4 px-4 sm:px-6">
-                          <div className="text-sm flex-1 min-w-0 break-words">{entry.message}</div>
+                          <div className="text-sm flex-1 min-w-0 break-words">
+                            {entry.message}
+                          </div>
                           <time className="text-gray-800 text-xs flex-shrink-0">
                             {entry.time}
                           </time>
@@ -662,9 +861,24 @@ export default function ClientProfile() {
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Number</p>
                     <div className="flex items-center justify-between gap-2">
-                      <p className="text-gray-800 flex-1 min-w-0 break-all">{client.contact.number}</p>
-                      <button className="cursor-pointer flex-shrink-0">
-                        <Copy size={16} />
+                      <p className="text-gray-800 flex-1 min-w-0 break-all">
+                        {client.contact.number}
+                      </p>
+                      <button
+                        onClick={() =>
+                          copyToClipboard(client.contact.number, "number")
+                        }
+                        className={`cursor-pointer flex-shrink-0 transition-colors ${
+                          copied === "number"
+                            ? "text-green-600"
+                            : "text-gray-600 hover:text-gray-800"
+                        }`}
+                      >
+                        {copied === "number" ? (
+                          <Check size={16} />
+                        ) : (
+                          <Copy size={16} />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -672,9 +886,24 @@ export default function ClientProfile() {
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Email</p>
                     <div className="flex items-center justify-between gap-2">
-                      <p className="text-gray-800 flex-1 min-w-0 break-all">{client.contact.email}</p>
-                      <button className="cursor-pointer flex-shrink-0">
-                        <Copy size={16} />
+                      <p className="text-gray-800 flex-1 min-w-0 break-all">
+                        {client.contact.email}
+                      </p>
+                      <button
+                        onClick={() =>
+                          copyToClipboard(client.contact.email, "email")
+                        }
+                        className={`cursor-pointer flex-shrink-0 transition-colors ${
+                          copied === "email"
+                            ? "text-green-600"
+                            : "text-gray-600 hover:text-gray-800"
+                        }`}
+                      >
+                        {copied === "email" ? (
+                          <Check size={16} />
+                        ) : (
+                          <Copy size={16} />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -682,7 +911,9 @@ export default function ClientProfile() {
                   <div>
                     <p className="text-lg sm:text-xl mb-1">Client Note</p>
                     <div className="bg-gray-100 p-4 rounded-xl">
-                      <p className="text-gray-700 text-sm sm:text-base break-words">{client.notes}</p>
+                      <p className="text-gray-700 text-sm sm:text-base break-words">
+                        {client.notes}
+                      </p>
                     </div>
                   </div>
 

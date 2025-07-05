@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
+import { SearchProvider } from "@/contexts/SearchContext";
 
 const neuliss = localFont({
   src: "../../assets/fonts/neulis-alt-light.woff2",
@@ -31,6 +32,7 @@ export default async function RootLayout({
       <body
         className={`${neuliss.className} antialiased bg-[#F5F5F5] text-foreground`}
       >
+        <SearchProvider>
         <div className="min-h-screen py-2 px-2 md:px-5 lg:px-10 pb-10 w-full max-w-7xl mx-auto space-y-10">
           <Header />
           <div className="flex flex-1 md:gap-8">
@@ -38,6 +40,7 @@ export default async function RootLayout({
             <main className="flex-1">{children}</main>
           </div>
         </div>
+        </SearchProvider>
       </body>
     </html>
   );

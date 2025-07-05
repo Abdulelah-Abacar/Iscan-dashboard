@@ -18,7 +18,7 @@ export default function Orders() {
     "Local Delivery",
   ];
 
-  const orders = [
+  const allOrders = [
     {
       id: "#4130",
       date: "22.4.2025",
@@ -28,46 +28,60 @@ export default function Orders() {
       fulfillmentStatus: "Fulfilled",
     },
     {
-      id: "#4130",
-      date: "22.4.2025",
-      client: "Ahmed b.",
-      total: "999",
+      id: "#4131",
+      date: "23.4.2025",
+      client: "Sara A.",
+      total: "1250",
+      paymentStatus: "Unpaid",
+      fulfillmentStatus: "Unfulfilled",
+    },
+    {
+      id: "#4132",
+      date: "24.4.2025",
+      client: "Omar K.",
+      total: "750",
       paymentStatus: "Paid",
+      fulfillmentStatus: "Unfulfilled",
+    },
+    {
+      id: "#4133",
+      date: "25.4.2025",
+      client: "Fatima H.",
+      total: "2100",
+      paymentStatus: "Unpaid",
       fulfillmentStatus: "Fulfilled",
     },
     {
-      id: "#4130",
-      date: "22.4.2025",
-      client: "Ahmed b.",
-      total: "999",
+      id: "#4134",
+      date: "26.4.2025",
+      client: "Hassan M.",
+      total: "450",
       paymentStatus: "Paid",
       fulfillmentStatus: "Fulfilled",
+      hasReturnRequest: true,
     },
     {
-      id: "#4130",
-      date: "22.4.2025",
-      client: "Ahmed b.",
-      total: "999",
+      id: "#4135",
+      date: "27.4.2025",
+      client: "Nour S.",
+      total: "890",
       paymentStatus: "Paid",
       fulfillmentStatus: "Fulfilled",
-    },
-    {
-      id: "#4130",
-      date: "22.4.2025",
-      client: "Ahmed b.",
-      total: "999",
-      paymentStatus: "Paid",
-      fulfillmentStatus: "Fulfilled",
-    },
-    {
-      id: "#4130",
-      date: "22.4.2025",
-      client: "Ahmed b.",
-      total: "999",
-      paymentStatus: "Paid",
-      fulfillmentStatus: "Fulfilled",
+      isLocalDelivery: true,
     },
   ];
+
+  // Filter logic
+  const getFilteredOrders = () => {
+    if (selectedFilter === "All") return allOrders;
+    if (selectedFilter === "Unfulfilled") return allOrders.filter(o => o.fulfillmentStatus === "Unfulfilled");
+    if (selectedFilter === "Unpaid") return allOrders.filter(o => o.paymentStatus === "Unpaid");
+    if (selectedFilter === "Return requests") return allOrders.filter(o => o.hasReturnRequest);
+    if (selectedFilter === "Local Delivery") return allOrders.filter(o => o.isLocalDelivery);
+    return allOrders;
+  };
+
+  const orders = getFilteredOrders();
 
   const data = [
     { name: "Jan", value: 68 },
@@ -86,6 +100,8 @@ export default function Orders() {
 
   const handleFilterClick = (filter) => {
     setSelectedFilter(filter);
+    setSelectedOrders([]);
+    setSelectAll(false);
   };
 
   const handleSelectAll = () => {
@@ -349,17 +365,19 @@ export default function Orders() {
                     </td>
                     <td className="py-2">
                       <div className="flex justify-center">
-                        <span className="px-3 lg:px-4 py-1.5 bg-green-100 text-green-800 rounded-full text-xs lg:text-sm flex items-center">
+                        <span className={`px-3 lg:px-4 py-1.5 rounded-full text-xs lg:text-sm flex items-center ${
+                          order.paymentStatus === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
                           {order.paymentStatus}
-                          <ChevronDown className="h-3 w-3 lg:h-4 lg:w-4 ml-1" />
                         </span>
                       </div>
                     </td>
                     <td className="py-2">
                       <div className="flex justify-center">
-                        <span className="px-3 lg:px-4 py-1.5 bg-green-100 text-green-800 rounded-full text-xs lg:text-sm flex items-center">
+                        <span className={`px-3 lg:px-4 py-1.5 rounded-full text-xs lg:text-sm flex items-center ${
+                          order.fulfillmentStatus === 'Fulfilled' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
                           {order.fulfillmentStatus}
-                          <ChevronDown className="h-3 w-3 lg:h-4 lg:w-4 ml-1" />
                         </span>
                       </div>
                     </td>
@@ -382,7 +400,7 @@ export default function Orders() {
                       onChange={() => handleSelectOrder(index)}
                     />
                     <Link href={`/orders/1`} className="font-medium text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors">
-                      #{order.id}
+                      {order.id}
                     </Link>
                   </div>
                   <span className="text-xs text-gray-500">{order.date}</span>
@@ -404,7 +422,9 @@ export default function Orders() {
                   
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Payment:</span>
-                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs flex items-center">
+                    <span className={`px-3 py-1 rounded-full text-xs flex items-center ${
+                      order.paymentStatus === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
                       {order.paymentStatus}
                       <ChevronDown className="h-3 w-3 ml-1" />
                     </span>
@@ -412,7 +432,9 @@ export default function Orders() {
                   
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Fulfillment:</span>
-                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs flex items-center">
+                    <span className={`px-3 py-1 rounded-full text-xs flex items-center ${
+                      order.fulfillmentStatus === 'Fulfilled' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                    }`}>
                       {order.fulfillmentStatus}
                       <ChevronDown className="h-3 w-3 ml-1" />
                     </span>

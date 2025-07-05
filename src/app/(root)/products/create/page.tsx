@@ -39,6 +39,57 @@ export default function CreateProductPage() {
   const [seoPageTitle, setSeoPageTitle] = useState("");
   const [seoMetaDescription, setSeoMetaDescription] = useState("");
   const router = useRouter();
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [scheduledDate, setScheduledDate] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+
+  const handleTagInput = (e) => {
+    const value = e.target.value;
+
+    if (value.endsWith(" ") && value.trim() !== "") {
+      const newTag = value.trim();
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      setTagInput("");
+    } else {
+      setTagInput(value);
+    }
+  };
+
+  const handleTagKeyDown = (e) => {
+    if (e.key === "Enter" && tagInput.trim() !== "") {
+      e.preventDefault();
+      const newTag = tagInput.trim();
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      setTagInput("");
+    } else if (e.key === "Backspace" && tagInput === "" && tags.length > 0) {
+      setTags(tags.slice(0, -1));
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
+  const toggleActive = () => {
+    setIsActive(!isActive);
+    if (!isActive) {
+      setShowCalendar(false);
+      setScheduledDate("");
+    }
+  };
+
+  const handleScheduleClick = () => {
+    setShowCalendar(!showCalendar);
+  };
+
+  const handleDateChange = (e) => {
+    setScheduledDate(e.target.value);
+  };
 
   const addNewOption = () => {
     const newOption = {
@@ -56,7 +107,8 @@ export default function CreateProductPage() {
       optionsList.map((option) => {
         if (option.id === optionId) {
           // If name is being set and values array is empty, add first empty value
-          const updatedValues = option.values.length === 0 && name ? [""] : option.values;
+          const updatedValues =
+            option.values.length === 0 && name ? [""] : option.values;
           return { ...option, name, values: updatedValues };
         }
         return option;
@@ -276,14 +328,17 @@ export default function CreateProductPage() {
               </h2>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between bg-gray-200 rounded-full py-2 px-4">
+                <div
+                  className="flex items-center justify-between bg-gray-200 rounded-full py-2 px-4 cursor-pointer"
+                  onClick={toggleActive}
+                >
                   <div className="flex items-center space-x-2">
                     <div
                       className={`w-4 h-4 rounded-full ${
                         isActive ? "bg-green-500" : "bg-gray-400"
                       }`}
                     ></div>
-                    <span>Active</span>
+                    <span>{isActive ? "Active" : "Inactive"}</span>
                   </div>
                   <div>
                     <span className="text-gray-500">v</span>
@@ -301,18 +356,71 @@ export default function CreateProductPage() {
                   </div>
                 </div>
 
-                <div className="ml-6">
-                  <a href="#" className="text-blue-500 underline text-sm">
-                    Schedule availability
-                  </a>
-                </div>
+                {!isActive && (
+                  <div className="ml-6">
+                    <button
+                      onClick={handleScheduleClick}
+                      className="text-blue-500 underline text-sm flex items-center space-x-1"
+                    >
+                      <span>Schedule availability</span>
+                    </button>
+                  </div>
+                )}
+
+                {showCalendar && !isActive && (
+                  <div className="ml-6 mt-2">
+                    <input
+                      type="datetime-local"
+                      value={scheduledDate}
+                      onChange={handleDateChange}
+                      className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {scheduledDate && (
+                      <p className="text-sm text-gray-600 mt-1">
+                        Product will be available on:{" "}
+                        {new Date(scheduledDate).toLocaleString()}
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 <div>
-                  <input
-                    type="text"
-                    className="w-full p-2 pl-4 mt-1 bg-gray-200 rounded-full placeholder:text-black placeholder:text-sm md:placeholder:text-xl"
-                    placeholder="Tags"
-                  />
+                  <div className="relative">
+                    {/* Tags display above input */}
+                    {tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+                          >
+                            {tag}
+                            <button
+                              onClick={() => removeTag(tag)}
+                              className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Input field */}
+                    <div className="p-2 bg-gray-200 rounded-full min-h-[40px] flex items-center">
+                      <input
+                        type="text"
+                        value={tagInput}
+                        onChange={handleTagInput}
+                        onKeyDown={handleTagKeyDown}
+                        className="flex-1 min-w-[100px] bg-transparent border-none outline-none placeholder:text-black placeholder:text-sm md:placeholder:text-base"
+                        placeholder="Tags"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Type a tag and press space or enter to add it
+                  </p>
                 </div>
               </div>
             </div>
@@ -483,14 +591,19 @@ export default function CreateProductPage() {
                     </div>
                   </div>
 
-                  <div className="mb-4">
+                  <div
+                    className={`mb-4 ${isDigitalProduct ? "opacity-50" : ""}`}
+                  >
                     <label className="block text-base md:text-lg font-medium mb-1">
                       WEIGHT
                     </label>
                     <div className="flex relative">
                       <input
                         type="text"
-                        className="flex-1 px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled={isDigitalProduct}
+                        className={`flex-1 px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          isDigitalProduct ? "cursor-not-allowed" : ""
+                        }`}
                       />
                       <span className="absolute top-1/2 -translate-y-1/2 right-2 text-base md:text-lg">
                         KG
@@ -498,13 +611,16 @@ export default function CreateProductPage() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className={`${isDigitalProduct ? "opacity-50" : ""}`}>
                     <label className="block text-base md:text-lg font-medium mb-1">
                       Country of origin
                     </label>
                     <input
                       type="text"
-                      className="w-full px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled={isDigitalProduct}
+                      className={`w-full px-3 py-1 md:px-4 md:py-2 bg-gray-100 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        isDigitalProduct ? "cursor-not-allowed" : ""
+                      }`}
                     />
                   </div>
                 </div>
@@ -798,7 +914,7 @@ export default function CreateProductPage() {
                         className="w-full px-3 py-1 md:px-4 md:py-2 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        [{seoPageTitle.length}] of 70 characters used
+                        {seoPageTitle.length} of 70 characters used
                       </p>
                     </div>
 
@@ -813,7 +929,7 @@ export default function CreateProductPage() {
                         className="w-full px-3 py-1 md:px-4 md:py-2 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        [{seoMetaDescription.length}] of 320 characters used
+                        {seoMetaDescription.length} of 320 characters used
                       </p>
                     </div>
 
@@ -821,19 +937,15 @@ export default function CreateProductPage() {
                       <label className="block text-base md:text-lg mb-1">
                         URL handle
                       </label>
-                      <div className="flex items-center relative">
+                      <div className="flex items-center bg-white rounded-full focus-within:ring-2 focus-within:ring-blue-500">
+                        <span className="pl-3 py-1 md:py-2 text-sm md:text-base text-gray-600">
+                          https://iScan.sa/products/
+                        </span>
                         <input
                           type="text"
-                          className="flex-1 px-3 py-1 md:px-4 md:py-2 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-                          placeholder="https://iScan.sa/products/"
+                          className="flex-1 py-1 md:py-2 bg-transparent rounded-r-full focus:outline-none text-sm md:text-base"
+                          placeholder="iscan-card"
                         />
-                        <span
-                          className={
-                            "absolute top-1/2 -translate-y-1/2 right-3 md:right-5 text-xs"
-                          }
-                        >
-                          iscan-card
-                        </span>
                       </div>
                     </div>
                   </div>

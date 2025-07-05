@@ -10,8 +10,8 @@ export default function Products() {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  // Sample products data based on the screenshot
-  const products = [
+  // Sample products data with varied statuses for filtering
+  const allProducts = [
     {
       id: 1,
       name: "iScan Basic Card",
@@ -23,41 +23,58 @@ export default function Products() {
     },
     {
       id: 2,
-      name: "iScan Basic Card",
+      name: "iScan Pro Card",
       image: "/api/placeholder/80/80",
-      status: "Active",
-      inventory: "400 in stock",
-      type: "NTAG215",
+      status: "Draft",
+      inventory: "0 in stock",
+      type: "NTAG216",
       vendor: "iScan",
     },
     {
       id: 3,
-      name: "iScan Basic Card",
+      name: "iScan Premium Card",
       image: "/api/placeholder/80/80",
       status: "Active",
-      inventory: "400 in stock",
+      inventory: "200 in stock",
       type: "NTAG215",
       vendor: "iScan",
     },
     {
       id: 4,
-      name: "iScan Basic Card",
+      name: "iScan Legacy Card",
       image: "/api/placeholder/80/80",
-      status: "Active",
-      inventory: "400 in stock",
+      status: "Archived",
+      inventory: "50 in stock",
+      type: "NTAG213",
+      vendor: "iScan",
+    },
+    {
+      id: 5,
+      name: "iScan Test Card",
+      image: "/api/placeholder/80/80",
+      status: "Draft",
+      inventory: "0 in stock",
       type: "NTAG215",
       vendor: "iScan",
     },
   ];
 
+  // Filter products based on selected tab
+  const filteredProducts = selectedTab === "All" 
+    ? allProducts 
+    : allProducts.filter(product => product.status === selectedTab);
+
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
+    // Reset selections when switching tabs
+    setSelectAll(false);
+    setSelectedProducts([]);
   };
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (!selectAll) {
-      setSelectedProducts([...Array(products.length).keys()]);
+      setSelectedProducts([...Array(filteredProducts.length).keys()]);
     } else {
       setSelectedProducts([]);
     }
@@ -70,6 +87,34 @@ export default function Products() {
       setSelectedProducts([...selectedProducts, index]);
     }
   };
+
+  // Get status styling based on status
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Active":
+        return "px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center w-fit";
+      case "Draft":
+        return "px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm flex items-center w-fit";
+      case "Archived":
+        return "px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm flex items-center w-fit";
+      default:
+        return "px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm flex items-center w-fit";
+    }
+  };
+
+  const getStatusStyleMobile = (status) => {
+    switch (status) {
+      case "Active":
+        return "px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs";
+      case "Draft":
+        return "px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs";
+      case "Archived":
+        return "px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs";
+      default:
+        return "px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs";
+    }
+  };
+
   return (
     <>
       <div className="flex items-center relative">
@@ -147,8 +192,8 @@ export default function Products() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
+                  {filteredProducts.map((product, index) => (
+                    <tr key={product.id} className="hover:bg-gray-50">
                       <td className="py-2 pl-4 pr-2">
                         <input
                           type="checkbox"
@@ -176,22 +221,8 @@ export default function Products() {
                         </div>
                       </td>
                       <td className="py-2 px-4">
-                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center w-fit">
+                        <span className={getStatusStyle(product.status)}>
                           {product.status}
-                          <svg
-                            className="h-4 w-4 ml-1"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6 9l6 6 6-6"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
                         </span>
                       </td>
                       <td className="py-2 px-4">{product.inventory}</td>
@@ -222,8 +253,8 @@ export default function Products() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
+                  {filteredProducts.map((product, index) => (
+                    <tr key={product.id} className="hover:bg-gray-50">
                       <td className="py-2 pl-4 pr-2">
                         <input
                           type="checkbox"
@@ -254,7 +285,7 @@ export default function Products() {
                         </div>
                       </td>
                       <td className="py-2 px-4">
-                        <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs flex items-center w-fit">
+                        <span className={getStatusStyleMobile(product.status)}>
                           {product.status}
                         </span>
                       </td>
@@ -268,8 +299,8 @@ export default function Products() {
             {/* Mobile Card Layout */}
             <div className="block sm:hidden">
               <div className="space-y-3">
-                {products.map((product, index) => (
-                  <div key={index} className="bg-gray-50 rounded-lg p-4">
+                {filteredProducts.map((product, index) => (
+                  <div key={product.id} className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-start space-x-3">
                       <input
                         type="checkbox"
@@ -293,7 +324,7 @@ export default function Products() {
                               {product.name}
                             </h3>
                             <div className="mt-1 flex items-center space-x-2">
-                              <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                              <span className={getStatusStyleMobile(product.status)}>
                                 {product.status}
                               </span>
                             </div>

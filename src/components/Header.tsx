@@ -8,10 +8,12 @@ import { SearchBar } from "./SearchBar";
 import { UserMenu } from "./UserMenu";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { useSearch } from "@/contexts/SearchContext";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { searchMode } = useSearch();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -133,7 +135,7 @@ export function Header() {
         </div>
       )}
 
-      <nav className="flex items-center justify-between">
+      <nav className={`flex justify-between ${searchMode === "client" ? "items-start" : "items-center" }`}>
         {/* Mobile hamburger menu - only visible on small screens */}
         <button
           className="lg:hidden flex items-center p-2"

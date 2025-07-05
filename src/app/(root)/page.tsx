@@ -26,7 +26,7 @@ export default function Home() {
       <section className="p-1.5 md:p-3 xl:p-5 xl:pl-10 mt-5">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Monthly Profit Card */}
-          <Card>
+          <Card className="flex flex-col justify-between">
             <div className="flex justify-between items-center mb-4">
               <SectionTitle title="Profit" underlinedPart="Monthly" />
               <AnalyticsLink />
@@ -42,7 +42,7 @@ export default function Home() {
           </Card>
 
           {/* Yearly Profit Card */}
-          <Card>
+          <Card className="flex flex-col justify-between">
             <div className="flex justify-between items-center mb-4">
               <SectionTitle title="Profit" underlinedPart="Yearly" />
               <AnalyticsLink />

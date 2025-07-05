@@ -128,6 +128,8 @@ export function BlogPostForm() {
     useState("Paragraph");
   const [description, setDescription] = useState("");
   const [addExcerpt, setAddExcerpt] = useState(false);
+  const [tagList, setTagList] = useState([]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -145,6 +147,28 @@ export function BlogPostForm() {
         featuredImage: file,
       }));
     }
+  };
+
+  const handleTagInput = (e) => {
+    const { value } = e.target;
+    
+    if (e.key === ' ' && value.trim() !== '') {
+      e.preventDefault();
+      const newTag = value.trim();
+      if (!tagList.includes(newTag)) {
+        setTagList(prev => [...prev, newTag]);
+      }
+      setFormData(prev => ({
+        ...prev,
+        tags: ''
+      }));
+    } else if (e.key === 'Backspace' && value === '' && tagList.length > 0) {
+      setTagList(prev => prev.slice(0, -1));
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTagList(prev => prev.filter(tag => tag !== tagToRemove));
   };
 
   return (
@@ -505,51 +529,74 @@ export function BlogPostForm() {
 
       {/* Organization */}
       <div className="bg-white rounded-4xl p-4 md:p-6 space-y-4">
-        <h3 className="font-medium text-gray-900">Organization</h3>
+      <h3 className="font-medium text-gray-900">Organization</h3>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Author
-          </label>
-          <div className="relative">
-            <select
-              name="author"
-              value={formData.author}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white text-sm md:text-base"
-            >
-              <option value="Ariella Schroer">Ariella Schroer</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Blog
-          </label>
-          <div className="relative">
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white text-sm md:text-base">
-              <option value="news">News</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Tags
-          </label>
-          <input
-            type="text"
-            name="tags"
-            value={formData.tags}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Author
+        </label>
+        <div className="relative">
+          <select
+            name="author"
+            value={formData.author}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-            placeholder="Add tags..."
-          />
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white text-sm md:text-base"
+          >
+            <option value="Ariella Schroer">Ariella Schroer</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         </div>
       </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Blog
+        </label>
+        <div className="relative">
+          <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white text-sm md:text-base">
+            <option value="news">News</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+        </div>
+      </div>
+
+      <div> 
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Tags
+        </label>
+        
+        {/* Tag chips display */}
+        {tagList.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tagList.map((tag, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 border"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => removeTag(tag)}
+                  className="ml-2 hover:bg-blue-200 rounded-full p-0.5 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+        
+        <input
+          type="text"
+          name="tags"
+          value={formData.tags}
+          onChange={handleInputChange}
+          onKeyDown={handleTagInput}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+          placeholder="Add tags..."
+        />
+      </div>
+    </div>
     </div>
   </div>
 

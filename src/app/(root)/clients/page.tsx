@@ -2,9 +2,23 @@
 import { useState } from "react";
 import { ClientRow } from "@/components/clients/ClientRow";
 import { RefreshCw, Search, X } from "lucide-react";
+import { useSearch } from "@/contexts/SearchContext";
 
 export default function Clients() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false); 
+  const { searchMode, switchToClientSearch, switchToGlobalSearch } = useSearch();
+
+  const handleSearchToggle = () => {
+    if (searchMode === 'client') {
+      // If already in client mode, switch back to global
+      switchToGlobalSearch();
+      setIsSearchOpen(false);
+    } else {
+      // Switch to client search mode
+      switchToClientSearch();
+      setIsSearchOpen(true);
+    }
+  };
 
   return (
     <>
@@ -18,13 +32,14 @@ export default function Clients() {
                 <RefreshCw className="h-5 w-5" />
               </button>
               <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                // onClick={() => setIsSearchOpen(!isSearchOpen)}
+                onClick={handleSearchToggle}
                 className="p-2 rounded-full bg-white hover:bg-white/70 cursor-pointer"
               >
-                {!isSearchOpen ? (
-                  <Search className="h-5 w-5" />
-                ) : (
+                {searchMode === 'client' ? (
                   <X className="w-5 h-5" />
+                ) : (
+                  <Search className="h-5 w-5" />
                 )}
               </button>
             </div>

@@ -12,6 +12,12 @@ import {
   MessageCircle,
   Phone,
   Mail,
+  Check,
+  MapPin,
+  X,
+  Package,
+  Calendar,
+  DollarSign,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -45,6 +51,132 @@ export default function ClientProfile() {
       time: "11:20 AM",
     },
   ]);
+  const [copied, setCopied] = useState(false);
+  const [showOrdersOverlay, setShowOrdersOverlay] = useState(false);
+
+  // Sample orders data - replace with real data
+  const orders = [
+    {
+      id: "ORD-001",
+      date: "2024-06-15",
+      status: "Delivered",
+      items: "Scanning Device Pro, 2x Batteries",
+      total: 1250.0,
+      trackingNumber: "TN123456789",
+    },
+    {
+      id: "ORD-002",
+      date: "2024-06-28",
+      status: "In Transit",
+      items: "Software License, Support Package",
+      total: 750.0,
+      trackingNumber: "TN987654321",
+    },
+    {
+      id: "ORD-003",
+      date: "2024-07-02",
+      status: "Processing",
+      items: "Maintenance Kit, Documentation",
+      total: 450.0,
+      trackingNumber: "TN555666777",
+    },
+  ];
+
+  // Get status color
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case "delivered":
+        return "text-green-600 bg-green-50";
+      case "in transit":
+        return "text-blue-600 bg-blue-50";
+      case "processing":
+        return "text-yellow-600 bg-yellow-50";
+      default:
+        return "text-gray-600 bg-gray-50";
+    }
+  };
+
+  // Email functionality
+  const handleEmailClick = () => {
+    const email = "Email@iScan.sa";
+    const subject = "Inquiry from Client Portal";
+    const body =
+      "Hello,\n\nI would like to get in touch regarding my orders.\n\nBest regards,";
+
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoUrl, "_blank");
+  };
+
+  // Phone call functionality
+  const handlePhoneClick = () => {
+    const phoneNumber = "+966509903532";
+    window.open(`tel:${phoneNumber}`, "_self");
+  };
+
+  // WhatsApp functionality
+  const handleWhatsAppClick = () => {
+    const phoneNumber = "966509903532"; // Remove + and spaces for WhatsApp
+    const message = "Hello, I would like to inquire about my orders.";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  // View map functionality
+  const handleViewMap = () => {
+    const address = "1010 wien, Jeddah, Saudi Arabia";
+    const encodedAddress = encodeURIComponent(address);
+
+    // Try Google Maps first, fallback to Apple Maps on iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+
+    if (isIOS) {
+      // Apple Maps for iOS
+      const appleMapsUrl = `http://maps.apple.com/?q=${encodedAddress}`;
+      window.open(appleMapsUrl, "_blank");
+    } else if (isAndroid) {
+      // Google Maps for Android
+      const googleMapsUrl = `geo:0,0?q=${encodedAddress}`;
+      window.open(googleMapsUrl, "_blank");
+    } else {
+      // Google Maps for desktop/web
+      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+      window.open(googleMapsUrl, "_blank");
+    }
+  };
+
+  // Orders overlay functionality
+  const handleOrdersClick = () => {
+    setShowOrdersOverlay(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setShowOrdersOverlay(false);
+  };
+  const handleCopyAddress = async () => {
+    const address = "Dasw helos\n1010 wien\nJeddah\nSaudi arabia";
+
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopied(true);
+      // Reset the copied state after 2 seconds
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement("textarea");
+      textArea.value = address;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   // Common emojis
   const commonEmojis = [
@@ -120,7 +252,7 @@ export default function ClientProfile() {
             </Link>
             <h1 className="text-2xl sm:text-3xl font-semibold">#4130</h1>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 ml-0 sm:ml-0">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium bg-white">
@@ -138,7 +270,7 @@ export default function ClientProfile() {
             </span>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-4">
           <div className="flex gap-2">
             <button className="px-3 py-1.5 text-xs sm:text-sm rounded-full bg-white hover:bg-gray-50 transition-colors">
@@ -163,6 +295,110 @@ export default function ClientProfile() {
           </div>
         </div>
       </div>
+
+      {/* Orders Overlay */}
+      {showOrdersOverlay && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 flex items-center justify-center">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            {/* Overlay Header */}
+            <div className="flex justify-between items-center p-6 border-b">
+              <h2 className="text-2xl font-semibold">Client Orders</h2>
+              <button
+                onClick={handleCloseOverlay}
+                className="hover:text-gray-600 transition-colors cursor-pointer"
+                title="Close"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Orders Table */}
+            <div className="overflow-x-auto max-h-[calc(90vh-120px)]">
+              <table className="w-full">
+                <thead className="bg-gray-50 sticky top-0">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      <div className="flex items-center gap-2">
+                        Order ID
+                      </div>
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      <div className="flex items-center gap-2">
+                        Date
+                      </div>
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      Status
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      Items
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      <div className="flex items-center gap-2">
+                        Total
+                      </div>
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                      Tracking
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {orders.map((order) => (
+                    <tr
+                      key={order.id}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {order.id}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {order.date}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                            order.status
+                          )}`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                      <td
+                        className="px-6 py-4 text-sm text-gray-700 max-w-xs truncate"
+                        title={order.items}
+                      >
+                        {order.items}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        ${order.total.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-blue-600 font-mono">
+                        {order.trackingNumber}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Overlay Footer */}
+            <div className="p-6 border-t bg-gray-50">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">
+                  Total Orders: {orders.length}
+                </span>
+                <span className="text-sm font-medium text-gray-900">
+                  Total Value: $
+                  {orders
+                    .reduce((sum, order) => sum + order.total, 0)
+                    .toFixed(2)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Section - Responsive Grid */}
       <section className="bg-gray-200 rounded-2xl sm:rounded-3xl p-2 sm:p-4">
@@ -193,9 +429,15 @@ export default function ClientProfile() {
                   <tbody>
                     {/* Row 1 */}
                     <tr>
-                      <td className="py-3 text-center text-lg xl:text-xl">iScan Card</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">20</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">x2</td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        iScan Card
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        20
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        x2
+                      </td>
                       <td className="py-3 text-center">
                         <div className="flex items-center justify-center gap-1 text-lg xl:text-xl">
                           <SaudiRiyal size={16} /> 40
@@ -205,9 +447,15 @@ export default function ClientProfile() {
 
                     {/* Row 2 */}
                     <tr>
-                      <td className="py-3 text-center text-lg xl:text-xl">iScan Card</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">20</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">x2</td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        iScan Card
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        20
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        x2
+                      </td>
                       <td className="py-3 text-center">
                         <div className="flex items-center justify-center gap-1 text-lg xl:text-xl">
                           <SaudiRiyal size={16} /> 40
@@ -217,9 +465,15 @@ export default function ClientProfile() {
 
                     {/* Row 3 */}
                     <tr>
-                      <td className="py-3 text-center text-lg xl:text-xl">iScan Card</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">20</td>
-                      <td className="py-3 text-center text-lg xl:text-xl">x2</td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        iScan Card
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        20
+                      </td>
+                      <td className="py-3 text-center text-lg xl:text-xl">
+                        x2
+                      </td>
                       <td className="py-3 text-center">
                         <div className="flex items-center justify-center gap-1 text-lg xl:text-xl">
                           <SaudiRiyal size={16} /> 40
@@ -229,7 +483,10 @@ export default function ClientProfile() {
 
                     {/* Card Total Row */}
                     <tr className="bg-gray-50 border-b-[20px] border-b-white">
-                      <td colSpan={3} className="py-2 text-2xl xl:text-3xl font-medium">
+                      <td
+                        colSpan={3}
+                        className="py-2 text-2xl font-medium"
+                      >
                         <div className="pl-12">Card Total</div>
                       </td>
                       <td className="py-2 text-center">
@@ -241,7 +498,10 @@ export default function ClientProfile() {
 
                     {/* Shipping Cost Row */}
                     <tr className="bg-gray-50 border-b-[20px] border-b-white">
-                      <td colSpan={3} className="py-2 text-2xl xl:text-3xl font-medium">
+                      <td
+                        colSpan={3}
+                        className="py-2 text-2xl font-medium"
+                      >
                         <div className="pl-12">Shipping cost</div>
                       </td>
                       <td className="py-2 text-center">
@@ -253,7 +513,10 @@ export default function ClientProfile() {
 
                     {/* Total Row */}
                     <tr className="bg-gray-50">
-                      <td colSpan={3} className="py-2 text-2xl xl:text-3xl font-medium">
+                      <td
+                        colSpan={3}
+                        className="py-2 text-2xl font-medium"
+                      >
                         <div className="pl-12">Total</div>
                       </td>
                       <td className="py-2 text-center">
@@ -403,7 +666,10 @@ export default function ClientProfile() {
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <button className="p-1 hover:text-gray-700">
-                                <Paperclip size={18} className="sm:w-5 sm:h-5" />
+                                <Paperclip
+                                  size={18}
+                                  className="sm:w-5 sm:h-5"
+                                />
                               </button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -429,7 +695,10 @@ export default function ClientProfile() {
               <div className="space-y-6 sm:space-y-10 relative">
                 <div className="absolute -top-[15%] left-6 sm:left-9 z-10 w-0.5 h-[120%] bg-black" />
                 {timeline.map((entry, index) => (
-                  <div key={index} className="w-11/12 md:w-full lg:w-3/5 ml-3 relative z-20">
+                  <div
+                    key={index}
+                    className="w-11/12 md:w-full lg:w-3/5 ml-3 relative z-20"
+                  >
                     {entry.type === "admin" ? (
                       <div className="flex items-start justify-between gap-2 sm:gap-4 pt-2 pb-1 px-3 sm:px-6 bg-white rounded-full">
                         <div className="flex gap-2 items-center min-w-0 flex-1">
@@ -440,7 +709,9 @@ export default function ClientProfile() {
                             </Avatar>
                           </div>
                           <div className="flex-1 flex flex-col min-w-0">
-                            <strong className="text-xs sm:text-sm">Admin</strong>
+                            <strong className="text-xs sm:text-sm">
+                              Admin
+                            </strong>
                             <small className="text-xs sm:text-sm text-gray-500 truncate">
                               {entry.message}
                             </small>
@@ -452,7 +723,9 @@ export default function ClientProfile() {
                       </div>
                     ) : (
                       <div className="flex items-start justify-between gap-2 sm:gap-4 px-3 sm:px-6">
-                        <div className="text-xs sm:text-sm flex-1 min-w-0">{entry.message}</div>
+                        <div className="text-xs sm:text-sm flex-1 min-w-0">
+                          {entry.message}
+                        </div>
                         <time className="text-gray-800 text-xs flex-shrink-0">
                           {entry.time}
                         </time>
@@ -470,7 +743,12 @@ export default function ClientProfile() {
               <h2 className="text-2xl sm:text-3xl ml-2">Client</h2>
               <div className="flex flex-col gap-2">
                 <span className="text-sm text-blue-600">Dasw helos</span>
-                <span className="text-xs underline cursor-pointer">3 orders</span>
+                <span
+                  className="text-xs underline cursor-pointer hover:text-blue-600 transition-colors"
+                  onClick={handleOrdersClick}
+                >
+                  3 orders
+                </span>
               </div>
 
               {/* Contact Information - Responsive */}
@@ -482,8 +760,14 @@ export default function ClientProfile() {
                   <div>
                     <span className="text-sm mb-1 inline-block">Email</span>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm truncate pr-2">Email@iScan.sa</span>
-                      <button className="cursor-pointer flex-shrink-0 hover:text-blue-600 transition-colors">
+                      <span className="text-sm truncate pr-2">
+                        Email@iScan.sa
+                      </span>
+                      <button
+                        onClick={handleEmailClick}
+                        className="cursor-pointer flex-shrink-0 hover:text-blue-600 transition-colors"
+                        title="Send Email"
+                      >
                         <Mail size={18} className="sm:w-5 sm:h-5" />
                       </button>
                     </div>
@@ -493,10 +777,18 @@ export default function ClientProfile() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm">+966 50 990 3532</span>
                       <div className="flex gap-2 flex-shrink-0">
-                        <button className="cursor-pointer hover:text-blue-600 transition-colors">
+                        <button
+                          onClick={handlePhoneClick}
+                          className="cursor-pointer hover:text-blue-600 transition-colors"
+                          title="Make Phone Call"
+                        >
                           <Phone size={18} className="sm:w-5 sm:h-5" />
                         </button>
-                        <button className="cursor-pointer hover:text-blue-600 transition-colors">
+                        <button
+                          onClick={handleWhatsAppClick}
+                          className="cursor-pointer hover:text-blue-600 transition-colors"
+                          title="Send WhatsApp Message"
+                        >
                           <MessageCircle size={18} className="sm:w-5 sm:h-5" />
                         </button>
                       </div>
@@ -507,12 +799,25 @@ export default function ClientProfile() {
 
               {/* Shipping Address - Responsive */}
               <div className="flex flex-col gap-2">
-                <h3 className="text-lg sm:text-xl font-medium ml-2">Shipping Address</h3>
+                <h3 className="text-lg sm:text-xl font-medium ml-2">
+                  Shipping Address
+                </h3>
                 <div>
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm">Dasw helos</span>
-                    <button className="cursor-pointer hover:text-blue-600 transition-colors">
-                      <Copy size={18} className="sm:w-5 sm:h-5" />
+                    <button
+                      onClick={handleCopyAddress}
+                      className="cursor-pointer hover:text-blue-600 transition-colors"
+                      title={copied ? "Copied!" : "Copy Address"}
+                    >
+                      {copied ? (
+                        <Check
+                          size={18}
+                          className="sm:w-5 sm:h-5 text-green-600"
+                        />
+                      ) : (
+                        <Copy size={18} className="sm:w-5 sm:h-5" />
+                      )}
                     </button>
                   </div>
                   <div className="flex flex-col gap-1">
@@ -522,6 +827,10 @@ export default function ClientProfile() {
                   </div>
                   <Link
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleViewMap();
+                    }}
                     className="text-xs text-blue-600 underline flex items-center gap-1 mt-1 hover:text-blue-800 transition-colors"
                   >
                     View Map
@@ -531,7 +840,9 @@ export default function ClientProfile() {
 
               {/* Billing Address */}
               <div className="flex flex-col gap-2">
-                <h3 className="text-lg sm:text-xl font-medium ml-2">Billing Address</h3>
+                <h3 className="text-lg sm:text-xl font-medium ml-2">
+                  Billing Address
+                </h3>
                 <span className="text-sm text-gray-600">
                   Same as Shipping address
                 </span>
