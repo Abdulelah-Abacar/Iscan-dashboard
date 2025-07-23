@@ -12,7 +12,7 @@ export function SidebarItem({
 }: {
   item: any;
   isActive: boolean;
-  notificationCount: number;
+  notificationCount?: number;
 }) {
   return (
     <div className="relative">

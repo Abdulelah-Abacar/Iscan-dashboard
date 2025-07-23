@@ -134,7 +134,9 @@
   }
 }
 
-/* Add this to your global CSS file or a CSS module */
+button {
+  cursor: pointer;
+}
 
 /* Base editor styles */
 .ProseMirror {

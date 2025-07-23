@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 export const AnalyticsLink = ({
-  to = "/analytics",
+  to = "/admin/analytics",
   dir = "upRight",
   className = "",
 }) => {

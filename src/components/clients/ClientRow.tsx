@@ -19,7 +19,7 @@ export function ClientRow() {
             <h3 className="font-semibold text-gray-900 truncate">Omar Bahattab</h3>
             <p className="text-sm text-gray-500 truncate">Saudi Arabia, Jeddah</p>
           </div>
-          <Link href={"/clients/1"}>
+          <Link href={"/admin/clients/1"}>
           <Info className="h-7 w-7 text-gray-400 flex-shrink-0" />
           </Link>
         </div>
@@ -79,7 +79,7 @@ export function ClientRow() {
             <p className="text-xs text-gray-500 uppercase tracking-wide">Last Active</p>
             <p className="font-medium text-gray-900">2 min ago</p>
           </div>
-          <Link href={"/clients/1"}>
+          <Link href={"/admin/clients/1"}>
           <Info className="h-6 w-6 text-gray-400 flex-shrink-0 ml-2" />
           </Link>
         </div>

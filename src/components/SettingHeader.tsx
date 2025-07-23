@@ -41,11 +41,11 @@ export function SettingHeader() {
 
             {/* We'd add navigation links here */}
             <nav className="flex flex-col gap-4">
-              <Link href="/settings" className="px-2 hover:bg-gray-100 rounded">
+              <Link href="/admin/settings" className="px-2 hover:bg-gray-100 rounded">
                 Settings
               </Link>
               <Link
-                href="/settings/info"
+                href="/admin/settings/info"
                 className="px-2 hover:bg-gray-100 rounded"
               >
                 Info

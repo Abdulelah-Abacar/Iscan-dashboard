@@ -1,0 +1,853 @@
+{
+  "header": {
+    "menu": {
+      "title": "Menu"
+    },
+    "greeting": {
+      "hello": "Hello",
+      "name": "Omar",
+      "role": "Main Admin"
+    },
+    "navigation": {
+      "home": "Home",
+      "orders": "Orders",
+      "products": "Products",
+      "clients": "Clients",
+      "rating": "Rating",
+      "analytics": "Analytics",
+      "discounts": "Discounts",
+      "blogs": "Blogs",
+      "settings": "Settings",
+      "account": "Account"
+    },
+    "logo": {
+      "alt": "Company Logo"
+    }
+  },
+  "Settings": {
+    "title": "Settings",
+    "profileImageAlt": "Profile picture",
+    "uploadPhoto": "Upload Photo",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "tax": "Tax",
+    "verified": "verified",
+    "fastLogin": "Fast Log-in Service",
+    "connectedTo": "Connected to",
+    "defaultFirstName": "Omar",
+    "defaultLastName": "Bahattab",
+    "defaultEmail": "iScanSol@gmail.com",
+    "defaultTax": "15"
+  },
+  "Info": {
+    "title": "Settings",
+    "password": {
+      "title": "Password",
+      "changeButton": "Change your password",
+      "lastChanged": "You changed your password {days} days ago"
+    },
+    "secondaryEmail": {
+      "title": "Secondary email",
+      "addButton": "Add secondary email",
+      "noEmail": "You do not have secondary email."
+    },
+    "twoStepAuth": {
+      "title": "Two-step authentication",
+      "turnOnButton": "Turn on two-step",
+      "description": "After entering your password, verify your identity with an authentication method"
+    }
+  },
+  "home": {
+    "title": "Home",
+    "loading": "Loading dashboard...",
+    "error": "Error: {error}",
+    "monthlyProfit": {
+      "title": "Monthly Profit",
+      "period": "This Month ({period})"
+    },
+    "yearlyProfit": {
+      "title": "Yearly Profit",
+      "period": "This Year ({period})"
+    },
+    "orders": {
+      "title": "Orders"
+    },
+    "charityWorks": {
+      "title": "Charity Works"
+    },
+    "userAnalysis": {
+      "title": "User Analysis"
+    },
+    "seeAll": "See all"
+  },
+  "orders": {
+    "title": "Orders",
+    "createOrder": "Create order",
+    "stats": {
+      "last": "Last",
+      "days": "Days",
+      "orders": "Orders",
+      "orderedItems": "Ordered items",
+      "returnedItems": "Returned items",
+      "fulfilledItems": "Fulfilled items",
+      "deliveredOrders": "Delivered orders"
+    },
+    "filters": {
+      "all": "All",
+      "unfulfilled": "Unfulfilled",
+      "unpaid": "Unpaid",
+      "returnRequests": "Return requests",
+      "localDelivery": "Local Delivery"
+    },
+    "table": {
+      "id": "ID",
+      "date": "DATE",
+      "clients": "Clients",
+      "total": "Total",
+      "paymentStatus": "Payment status",
+      "fulfillmentStatus": "Fulfillment status",
+      "client": "Client:",
+      "payment": "Payment:",
+      "fulfillment": "Fulfillment:"
+    },
+    "status": {
+      "paid": "Paid",
+      "unpaid": "Unpaid",
+      "fulfilled": "Fulfilled",
+      "unfulfilled": "Unfulfilled"
+    }
+  },
+  "orderDetails": {
+    "header": {
+      "paid": "Paid",
+      "unfulfilled": "Unfulfilled",
+      "orderFrom": "from",
+      "onlineStore": "Online store",
+      "refund": "Refund",
+      "edit": "Edit"
+    },
+    "ordersOverlay": {
+      "title": "Client Orders",
+      "close": "Close",
+      "orderId": "Order ID",
+      "date": "Date",
+      "status": "Status",
+      "items": "Items",
+      "total": "Total",
+      "tracking": "Tracking",
+      "totalOrders": "Total Orders",
+      "totalValue": "Total Value"
+    },
+    "orderTable": {
+      "items": "Items",
+      "unitPrice": "Unit price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "cardTotal": "Card Total",
+      "shippingCost": "Shipping cost",
+      "totalAmount": "Total",
+      "changeStatus": "Change order status",
+      "fulfillItem": "Fulfill item"
+    },
+    "timeline": {
+      "title": "Time Line",
+      "commentPlaceholder": "Leave comment...",
+      "addEmoji": "Add emoji",
+      "mention": "Mention someone",
+      "hashtag": "Add hashtag",
+      "attach": "Attach file",
+      "post": "Post"
+    },
+    "clientInfo": {
+      "title": "Client",
+      "orders": "{count} orders",
+      "contactInfo": "Contact information",
+      "email": "Email",
+      "number": "Number",
+      "shippingAddress": "Shipping Address",
+      "viewMap": "View Map",
+      "billingAddress": "Billing Address",
+      "sameAsShipping": "Same as Shipping address",
+      "clientNote": "Client Note"
+    },
+    "status": {
+      "delivered": "Delivered",
+      "inTransit": "In Transit",
+      "processing": "Processing"
+    },
+    "emailTooltip": "Send Email",
+    "phoneTooltip": "Make Phone Call",
+    "whatsappTooltip": "Send WhatsApp Message",
+    "copyTooltip": "Copy Address",
+    "copiedTooltip": "Copied!",
+    "emailSubject": "Inquiry from Client Portal",
+    "emailBody": "Hello,\n\nI would like to get in touch regarding my orders.\n\nBest regards,",
+    "whatsappMessage": "Hello, I would like to inquire about my orders."
+  },
+  "Products": {
+    "title": "Products",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "draft": "Draft",
+      "archived": "Archived"
+    },
+    "actions": {
+      "filter": "Filter",
+      "refresh": "Refresh",
+      "search": "Search",
+      "addProduct": "Add Product",
+      "add": "Add",
+      "clearFilters": "Clear all filters"
+    },
+    "table": {
+      "headers": {
+        "product": "Product",
+        "status": "Status",
+        "inventory": "Inventory",
+        "type": "Type",
+        "vendor": "Vendor"
+      }
+    },
+    "search": {
+      "placeholder": "Search products...",
+      "searchTerm": "Search term"
+    },
+    "filters": {
+      "type": "Type",
+      "allTypes": "All types",
+      "vendor": "Vendor",
+      "allVendors": "All vendors",
+      "inventory": "Inventory",
+      "anyInventory": "Any inventory",
+      "inStock": "In stock",
+      "outOfStock": "Out of stock",
+      "order": "Sort order",
+      "orderOptions": {
+        "asc": "Ascending",
+        "desc": "Descending"
+      },
+      "activeFilters": "Active filters:"
+    },
+    "results": {
+      "showing": "Showing {count} of {total} products"
+    },
+    "mobile": {
+      "type": "Type",
+      "inventory": "Inventory",
+      "vendor": "Vendor"
+    }
+  },
+  "CreateProductPage": {
+    "title": "Create Product",
+    "back": "Back",
+    "actions": {
+      "duplicate": "Duplicate",
+      "preview": "Preview",
+      "share": "Share"
+    },
+    "productStatus": {
+      "title": "Product status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "onlineStore": "Online Store",
+      "scheduleAvailability": "Schedule availability",
+      "tagsPlaceholder": "Tags",
+      "tagsHelp": "Type a tag and press space or enter to add it"
+    },
+    "media": {
+      "title": "Media",
+      "addImage": "Add"
+    },
+    "price": {
+      "title": "Price",
+      "compareAtPrice": "Compare at price",
+      "chargeTax": "Charge tax on this product"
+    },
+    "costPerItem": {
+      "title": "Cost per item",
+      "note": "Customers won't see this"
+    },
+    "inventory": {
+      "title": "Inventory",
+      "sku": "SKU (Stock Keeping Unit)",
+      "barcode": "Barcode (ISBN, UPC, GTIN, etc.)",
+      "continueSelling": "Continue selling when out of stock"
+    },
+    "shipping": {
+      "title": "Shipping",
+      "digitalProduct": "This is a Digital product",
+      "weight": "WEIGHT",
+      "countryOfOrigin": "Country of origin"
+    },
+    "quantity": {
+      "title": "QUANTITY",
+      "location": "Location name",
+      "available": "Available quantity"
+    },
+    "options": {
+      "title": "Options",
+      "hasOptions": "This product has options, like size or color",
+      "optionName": "Option name",
+      "optionValues": "Option values",
+      "addValue": "Add another value",
+      "done": "Done",
+      "addOption": "Add another option",
+      "selectOption": "Select an option",
+      "createNew": "+ Create new option"
+    },
+    "seo": {
+      "title": "Search engine listing preview",
+      "editSeo": "Edit Website SEO",
+      "pageTitle": "Page title",
+      "metaDescription": "Meta description",
+      "urlHandle": "URL handle",
+      "charactersUsed": "of {max} characters used"
+    },
+    "description": "Description",
+    "placeholder": {
+      "title": "Title",
+      "price": "0.00",
+      "quantity": "1000"
+    }
+  },
+  "Clients": {
+    "title": "Clients",
+    "latestClients": "Latest Clients",
+    "searchToggle": {
+      "ariaLabel": "Toggle client search mode"
+    },
+    "refreshButton": {
+      "ariaLabel": "Refresh clients list"
+    }
+  },
+  "ClientProfile": {
+    "backToClients": "Back to Clients",
+    "clientSince": "Client since",
+    "amountSpent": "Amount spent",
+    "orders": "Orders",
+    "customerSince": "Customer since",
+    "timeLine": "Time Line",
+    "leaveComment": "Leave comment...",
+    "addEmoji": "Add emoji",
+    "mentionSomeone": "Mention someone",
+    "addHashtag": "Add hashtag",
+    "attachFile": "Attach file",
+    "post": "Post",
+    "aboutClient": "About Client",
+    "number": "Number",
+    "email": "Email",
+    "clientNote": "Client Note",
+    "storeCredit": "Store credit",
+    "seeAllOrders": "See all orders",
+    "allOrders": "All Orders",
+    "id": "ID",
+    "date": "DATE",
+    "total": "TOTAL",
+    "status": "STATUS",
+    "completed": "Completed",
+    "pending": "Pending",
+    "refund": "Refund"
+  },
+  "VerificationModel": {
+    "accountVerification": "Account verification",
+    "selected": "Selected",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "SuccessModel": {
+    "authenticationStatusUpdated": "Authentication status updated",
+    "ok": "OK"
+  },
+  "StoreCreditModel": {
+    "editBalance": "Edit balance",
+    "adjustment": "Adjustment",
+    "credit": "Credit",
+    "debit": "Debit",
+    "currency": "Currency",
+    "amount": "Amount",
+    "currentBalance": "Current balance is SAR {amount}",
+    "expirationDate": "Expiration date",
+    "expirationWarning": "Countries have different laws for store credit expiration dates. Check the laws for your country before changing this date.",
+    "noExpiration": "No expiration date",
+    "setExpiration": "Set expiration date",
+    "selectExpiration": "Select expiration date",
+    "expirationTime": "Credit will expire at 11:59 PM on the selected date",
+    "cancel": "Cancel",
+    "reviewChanges": "Review changes"
+  },
+  "StoreCreditSummeryModel": {
+    "reviewChanges": "Review changes",
+    "summary": "Summary",
+    "balance": "Balance",
+    "amountTo": "Amount to {adjustment}",
+    "newBalance": "New balance",
+    "expirationDate": "Expiration date",
+    "cancel": "Cancel",
+    "credit": "Credit",
+    "debit": "Debit"
+  },
+  "StoreCreditBalanceModel": {
+    "storeCreditFor": "Store credit for {customerName}",
+    "balance": "Balance",
+    "expirableAmounts": "Expirable amounts",
+    "allTransactions": "All transactions",
+    "date": "Date",
+    "event": "Event",
+    "source": "Source",
+    "expired": "Expired",
+    "debit": "Debit",
+    "credit": "Credit",
+    "balanceCol": "Balance",
+    "learnMore": "Learn more about",
+    "storeCreditLink": "store credit",
+    "editBalance": "Edit balance"
+  },
+  "Rating": {
+    "title": "Rating",
+    "latestRating": "Latest Rating",
+    "tabs": {
+      "all": "All",
+      "pending": "Pending",
+      "reply": "Reply"
+    },
+    "actions": {
+      "filter": "Filter",
+      "refresh": "Refresh",
+      "search": "Search"
+    },
+    "noRatings": "No ratings found for this category",
+    "modal": {
+      "reply": "Reply",
+      "writeReply": "Write your reply...",
+      "submitReply": "Submit Reply",
+      "cancel": "Cancel",
+      "yourReply": "Your Reply",
+      "seeReply": "See owner reply"
+    },
+    "ratingActions": {
+      "decline": "Decline",
+      "accept": "Accept"
+    }
+  },
+  "Analytics": {
+    "title": "Analytics",
+    "metrics": {
+      "grossSales": "Gross Sales",
+      "totalNetProfit": "Total net profit",
+      "subscriptionRevenue": "Subscription Revenue",
+      "financialLiabilities": "Financial Liabilities",
+      "averageOrderValue": "Average Order Value",
+      "userAnalysis": "User Analysis",
+      "shippingCosts": "Shipping costs",
+      "taxes": "Taxes",
+      "orders": "Orders",
+      "totalRefunds": "Total refunds",
+      "totalSadaca": "Total Sadaca",
+      "totalDonations": "Total Donations",
+      "dueCharities": "Due Charities"
+    },
+    "charts": {
+      "totalSalesOverTime": "Total sales over time"
+    },
+    "modals": {
+      "financialLiabilities": {
+        "title": "Financial Liabilities",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "sadaca": {
+        "title": "Sadaca",
+        "save": "Save",
+        "noEntries": "No sadaca entries yet. Add your first entry above!",
+        "date": "Date",
+        "amount": "Amount"
+      }
+    },
+    "currencySymbol": "SAR"
+  },
+  "Activator": {
+    "title": "Elite Activator",
+    "arrowAlt": "Arrow icon",
+    "desktopMode": "Desktop mode",
+    "mobileMode": "Mobile mode",
+    "cardIssuance": "Card Issuance",
+    "issueNow": "Issue Now",
+    "usernamePlaceholder": "Username",
+    "copy": "Copy",
+    "history": "History",
+    "seeAll": "See all",
+    "emptyHistory": "History is empty",
+    "refresh": "Refresh",
+    "delete": "Delete",
+    "close": "Close",
+    "searchPlaceholder": "Search...",
+    "noHistoryFound": "No history found",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "active": "Active",
+    "inactive": "Inactive",
+    "tapPhone": "Tap your phone to the card",
+    "deleteConfirmation": "Do you want to delete {username}",
+    "statusConfirmation": "Do you want to {action} {username}",
+    "activate": "activate",
+    "deactivate": "deactivate"
+  },
+  "Calculator": {
+    "title": "Quote Manager",
+    "arrowAlt": "Arrow icon",
+    "subtitle": "Manage and Access All Your Quotes",
+    "description": "Create, manage, and track pricing quotes effortlessly — all from one central hub.",
+    "newQuote": "New Quote",
+    "continue": "Continue",
+    "quoteManager": "Quote Manager",
+    "quantity": "Quantity",
+    "quantityLabel": "Quantity",
+    "back": "Back",
+    "addOnsTitle": "Add-Ons",
+    "summary": "Summary",
+    "selectOffer": "Select offer",
+    "select": "Select",
+    "remove": "Remove",
+    "freeShipping": "Free Shipping",
+    "firstYearFree": "First Year Free",
+    "profit": "Profit",
+    "discount": "Discount",
+    "perPcs": "Per / PCS",
+    "shipping": "Shipping",
+    "total": "Total",
+    "checkShare": "Check Share",
+    "shareAsText": "Share as Text",
+    "shareAsPdf": "Share as PDF",
+    "shareAs": "Share as",
+    "use": "Use",
+    "per": "per",
+    "year": "year",
+    "month": "month",
+    "requestCard": "Request Card",
+    "multipleDesigns": "Multiple Designs",
+    "singleDesign": "Single Design",
+    
+    "products": {
+      "eliteCard": {
+        "name": "Elite Card",
+        "description": "iScan card with a matte finish and a raised UV logo - luxury fit for business leaders",
+        "features": [
+          "Premium matte finish",
+          "Raised UV logo",
+          "Luxury design",
+          "Business leader fit"
+        ]
+      },
+      "elitePass": {
+        "name": "Elite Pass",
+        "description": "Elite Pass is a sleek digital card with a matte design and a glossy logo, always with you on your phone",
+        "features": [
+          "Digital card",
+          "Matte design",
+          "Glossy logo",
+          "Mobile compatible"
+        ]
+      },
+      "elitePrint": {
+        "name": "Elite Print",
+        "description": "Elite Print brings your vision to life with matte elegance and UV brilliance - turning every card into pure luxury",
+        "features": [
+          "Matte elegance",
+          "UV brilliance",
+          "Luxury finish",
+          "Premium quality"
+        ]
+      }
+    },
+    
+    "addOns": {
+      "wallet": {
+        "name": "Wallet+",
+        "description": "The quiet river danced under the silver moonlight"
+      }
+    },
+    
+    "shareOptions": {
+      "gmail": "Gmail",
+      "whatsapp": "WhatsApp",
+      "outlook": "Outlook",
+      "telegram": "Telegram"
+    },
+    
+    "offers": {
+      "discount": {
+        "10": "%10 Discount",
+        "15": "%15 Discount",
+        "20": "%20 Discount",
+        "25": "%25 Discount",
+        "30": "%30 Discount"
+      },
+      "subscription": {
+        "monthly": "Monthly Plan",
+        "yearly": "Yearly Plan",
+        "premium": "Premium Plan"
+      }
+    }
+  },
+  "BlogPosts": {
+    "title": "Blogs",
+    "tabs": {
+      "all": "All",
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived"
+    },
+    "actions": {
+      "create": "Create Post",
+      "createShort": "Create",
+      "filter": "Filters",
+      "refresh": "Refresh",
+      "search": "Search",
+      "clearFilters": "Clear all filters"
+    },
+    "search": {
+      "placeholder": "Search posts, categories, or authors..."
+    },
+    "table": {
+      "post": "Post",
+      "status": "Status",
+      "views": "Views",
+      "category": "Category",
+      "author": "Author",
+      "selectAll": "Select All",
+      "selectedCount": "{count} selected"
+    },
+    "filters": {
+      "category": "Category",
+      "allCategories": "All Categories",
+      "author": "Author",
+      "allAuthors": "All Authors",
+      "sortBy": "Sort By",
+      "sortOptions": {
+        "title": "Title",
+        "views": "Views",
+        "category": "Category",
+        "author": "Author"
+      },
+      "order": "Order",
+      "orderOptions": {
+        "asc": "Ascending",
+        "desc": "Descending"
+      },
+      "activeFilters": "Active filters:"
+    },
+    "results": {
+      "showing": "Showing {filtered} of {total} posts",
+      "none": "No posts found matching your criteria."
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived"
+    }
+  },
+  "CreatePost": {
+    "title": "Add blog post",
+    "form": {
+      "title": {
+        "label": "Title",
+        "placeholder": "e.g. Blog about your latest products or news"
+      },
+      "content": {
+        "label": "Content"
+      },
+      "excerpt": {
+        "label": "Excerpt",
+        "addButton": "Add excerpt",
+        "description": "Add a summary of the post to appear on your home page or blog."
+      },
+      "seo": {
+        "label": "Search engine listing preview",
+        "editButton": "Edit website SEO",
+        "description": "Add a title and description to see how this Blog post might appear in a search engine listing",
+        "pageTitle": "Page title",
+        "metaDescription": "Meta description",
+        "urlHandle": "URL handle"
+      },
+      "visibility": {
+        "label": "Visibility",
+        "visible": "Visible",
+        "hidden": "Hidden",
+        "publishDate": "Publish date"
+      },
+      "featuredImage": {
+        "label": "Featured image",
+        "addButton": "Add image"
+      },
+      "organization": {
+        "label": "Organization",
+        "author": "Author",
+        "blog": "Blog",
+        "tags": "Tags",
+        "tagsPlaceholder": "Add tags..."
+      },
+      "actions": {
+        "saveDraft": "Save as draft",
+        "next": "Next"
+      }
+    }
+  },
+  "Discount": {
+    "title": "Discounts",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "scheduled": "Scheduled",
+      "expired": "Expired"
+    },
+    "actions": {
+      "filter": "Filter",
+      "refresh": "Refresh",
+      "search": "Search",
+      "create": "Create Discount",
+      "createShort": "Create",
+      "generate": "Generate",
+      "browse": "Browse",
+      "cancel": "Cancel",
+      "save": "Save discount"
+    },
+    "table": {
+      "title": "Title",
+      "status": "Status",
+      "type": "Type",
+      "uses": "Uses"
+    },
+    "modal": {
+      "selectTitle": "Select discount type",
+      "productDiscount": "Amount off products",
+      "orderDiscount": "Amount off order",
+      "buyXGetY": "Buy X get Y",
+      "freeShipping": "Free shipping",
+      "subtitle": {
+        "product": "Product discount",
+        "order": "Order discount",
+        "shipping": "Shipping discount"
+      }
+    },
+    "form": {
+      "title": "Create {type} discount",
+      "sections": {
+        "method": {
+          "title": "Method",
+          "discountCode": {
+            "label": "Discount code",
+            "description": "Customers must enter a code to receive the discount"
+          },
+          "automatic": {
+            "label": "Automatic discount",
+            "description": "Discount is automatically applied at checkout"
+          }
+        },
+        "value": {
+          "title": "Value",
+          "percentage": "Percentage",
+          "fixedAmount": "Fixed amount"
+        },
+        "appliesTo": {
+          "title": "Applies to",
+          "allProducts": "All products",
+          "specificCollections": "Specific collections",
+          "specificProducts": "Specific products"
+        },
+        "requirements": {
+          "title": "Minimum purchase requirements",
+          "none": "No minimum requirements",
+          "amount": "Minimum purchase amount",
+          "quantity": "Minimum quantity of items"
+        },
+        "combinations": {
+          "title": "Combinations",
+          "description": "This discount can be combined with:",
+          "productDiscounts": "Product discounts",
+          "orderDiscounts": "Order discounts",
+          "shippingDiscounts": "Shipping discounts"
+        },
+        "dates": {
+          "title": "Active dates",
+          "start": "Start date and time *",
+          "end": "Set end date and time"
+        }
+      },
+      "fields": {
+        "discountCode": "Enter discount code",
+        "discountTitle": "Enter discount title",
+        "value": "Value",
+        "minimumAmount": "Minimum amount",
+        "minimumQuantity": "Minimum quantity",
+        "startDate": "Start date",
+        "startTime": "Start time",
+        "endDate": "End date",
+        "endTime": "End time"
+      }
+    }
+  },
+  "DiscountCreate": {
+    "title": "Create discount",
+    "sections": {
+      "method": {
+        "title": "Method",
+        "discountCode": {
+          "label": "Discount code",
+          "description": "Customers must enter a code to receive the discount",
+          "placeholder": "Enter discount code",
+          "generate": "Generate"
+        },
+        "automatic": {
+          "label": "Automatic discount",
+          "description": "Discount is automatically applied at checkout",
+          "placeholder": "Enter discount title"
+        }
+      },
+      "value": {
+        "title": "Value",
+        "percentage": "Percentage",
+        "fixedAmount": "Fixed amount",
+        "placeholder": "Value"
+      },
+      "appliesTo": {
+        "title": "Applies to",
+        "allProducts": "All products",
+        "specificCollections": "Specific collections",
+        "specificProducts": "Specific products",
+        "browse": "Browse"
+      },
+      "requirements": {
+        "title": "Minimum purchase requirements",
+        "none": "No minimum requirements",
+        "amount": "Minimum purchase amount",
+        "quantity": "Minimum quantity of items",
+        "placeholder": {
+          "amount": "0.00",
+          "quantity": "1"
+        }
+      },
+      "combinations": {
+        "title": "Combinations",
+        "description": "This discount can be combined with:",
+        "productDiscounts": "Product discounts",
+        "orderDiscounts": "Order discounts",
+        "shippingDiscounts": "Shipping discounts"
+      },
+      "dates": {
+        "title": "Active dates",
+        "start": "Start date and time *",
+        "end": "Set end date and time",
+        "startDate": "Start date",
+        "startTime": "Start time",
+        "endDate": "End date",
+        "endTime": "End time"
+      }
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save discount"
+    }
+  }
+}

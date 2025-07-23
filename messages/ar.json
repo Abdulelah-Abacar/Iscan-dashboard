@@ -1,0 +1,853 @@
+{
+  "header": {
+    "menu": {
+      "title": "القائمة"
+    },
+    "greeting": {
+      "hello": "مرحبا",
+      "name": "عمر",
+      "role": "المدير الرئيسي"
+    },
+    "navigation": {
+      "home": "الرئيسية",
+      "orders": "الطلبات",
+      "products": "المنتجات",
+      "clients": "العملاء",
+      "rating": "التقييم",
+      "analytics": "التحليلات",
+      "discounts": "الخصومات",
+      "blogs": "المدونات",
+      "settings": "الإعدادات",
+      "account": "الحساب"
+    },
+    "logo": {
+      "alt": "شعار الشركة"
+    }
+  },
+  "Settings": {
+    "title": "الإعدادات",
+    "profileImageAlt": "صورة الملف الشخصي",
+    "uploadPhoto": "رفع صورة",
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "email": "البريد الإلكتروني",
+    "tax": "الضريبة",
+    "verified": "تم التحقق",
+    "fastLogin": "خدمة تسجيل الدخول السريع",
+    "connectedTo": "متصل بـ",
+    "defaultFirstName": "عمر",
+    "defaultLastName": "بهتّاب",
+    "defaultEmail": "iScanSol@gmail.com",
+    "defaultTax": "15"
+  },
+  "Info": {
+    "title": "الإعدادات",
+    "password": {
+      "title": "كلمة المرور",
+      "changeButton": "تغيير كلمة المرور",
+      "lastChanged": "لقد قمت بتغيير كلمة المرور منذ {days} يوم"
+    },
+    "secondaryEmail": {
+      "title": "البريد الإلكتروني الثانوي",
+      "addButton": "إضافة بريد إلكتروني ثانوي",
+      "noEmail": "ليس لديك بريد إلكتروني ثانوي."
+    },
+    "twoStepAuth": {
+      "title": "المصادقة الثنائية",
+      "turnOnButton": "تفعيل المصادقة الثنائية",
+      "description": "بعد إدخال كلمة المرور، قم بتأكيد هويتك باستخدام طريقة المصادقة"
+    }
+  },
+  "home": {
+    "title": "الرئيسية",
+    "loading": "جاري تحميل لوحة التحكم...",
+    "error": "خطأ: {error}",
+    "monthlyProfit": {
+      "title": "الأرباح الشهرية",
+      "period": "هذا الشهر ({period})"
+    },
+    "yearlyProfit": {
+      "title": "الأرباح السنوية",
+      "period": "هذا العام ({period})"
+    },
+    "orders": {
+      "title": "الطلبات"
+    },
+    "charityWorks": {
+      "title": "الأعمال الخيرية"
+    },
+    "userAnalysis": {
+      "title": "تحليل المستخدمين"
+    },
+    "seeAll": "عرض الكل"
+  },
+  "orders": {
+    "title": "الطلبات",
+    "createOrder": "إنشاء طلب",
+    "stats": {
+      "last": "آخر",
+      "days": "أيام",
+      "orders": "الطلبات",
+      "orderedItems": "العناصر المطلوبة",
+      "returnedItems": "العناصر المرتجعة",
+      "fulfilledItems": "العناصر المكتملة",
+      "deliveredOrders": "الطلبات المسلمة"
+    },
+    "filters": {
+      "all": "الكل",
+      "unfulfilled": "غير مكتملة",
+      "unpaid": "غير مدفوعة",
+      "returnRequests": "طلبات الإرجاع",
+      "localDelivery": "التوصيل المحلي"
+    },
+    "table": {
+      "id": "الرقم التعريفي",
+      "date": "التاريخ",
+      "clients": "العملاء",
+      "total": "المجموع",
+      "paymentStatus": "حالة الدفع",
+      "fulfillmentStatus": "حالة التنفيذ",
+      "client": "العميل:",
+      "payment": "الدفع:",
+      "fulfillment": "التنفيذ:"
+    },
+    "status": {
+      "paid": "مدفوع",
+      "unpaid": "غير مدفوع",
+      "fulfilled": "مكتمل",
+      "unfulfilled": "غير مكتمل"
+    }
+  },
+  "orderDetails": {
+    "header": {
+      "paid": "مدفوع",
+      "unfulfilled": "غير مكتمل",
+      "orderFrom": "من",
+      "onlineStore": "المتجر الإلكتروني",
+      "refund": "استرداد",
+      "edit": "تعديل"
+    },
+    "ordersOverlay": {
+      "title": "طلبات العميل",
+      "close": "إغلاق",
+      "orderId": "رقم الطلب",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "items": "المنتجات",
+      "total": "المجموع",
+      "tracking": "رقم التتبع",
+      "totalOrders": "إجمالي الطلبات",
+      "totalValue": "القيمة الإجمالية"
+    },
+    "orderTable": {
+      "items": "المنتجات",
+      "unitPrice": "سعر الوحدة",
+      "quantity": "الكمية",
+      "total": "المجموع",
+      "cardTotal": "إجمالي البطاقة",
+      "shippingCost": "تكلفة الشحن",
+      "totalAmount": "المجموع",
+      "changeStatus": "تغيير حالة الطلب",
+      "fulfillItem": "تنفيذ العنصر"
+    },
+    "timeline": {
+      "title": "الجدول الزمني",
+      "commentPlaceholder": "اترك تعليقًا...",
+      "addEmoji": "إضافة إيموجي",
+      "mention": "ذكر شخص",
+      "hashtag": "إضافة وسم",
+      "attach": "إرفاق ملف",
+      "post": "نشر"
+    },
+    "clientInfo": {
+      "title": "العميل",
+      "orders": "{count} طلبات",
+      "contactInfo": "معلومات الاتصال",
+      "email": "البريد الإلكتروني",
+      "number": "الرقم",
+      "shippingAddress": "عنوان الشحن",
+      "viewMap": "عرض الخريطة",
+      "billingAddress": "عنوان الفاتورة",
+      "sameAsShipping": "نفس عنوان الشحن",
+      "clientNote": "ملاحظة العميل"
+    },
+    "status": {
+      "delivered": "تم التسليم",
+      "inTransit": "في الطريق",
+      "processing": "قيد المعالجة"
+    },
+    "emailTooltip": "إرسال بريد إلكتروني",
+    "phoneTooltip": "إجراء مكالمة هاتفية",
+    "whatsappTooltip": "إرسال رسالة واتساب",
+    "copyTooltip": "نسخ العنوان",
+    "copiedTooltip": "تم النسخ!",
+    "emailSubject": "استفسار من بوابة العميل",
+    "emailBody": "مرحبًا،\n\nأود التواصل بخصوص طلباتي.\n\nمع أطيب التحيات،",
+    "whatsappMessage": "مرحبًا، أود الاستفسار عن طلباتي."
+  },
+  "Products": {
+    "title": "المنتجات",
+    "tabs": {
+      "all": "الكل",
+      "active": "نشط",
+      "draft": "مسودة",
+      "archived": "مؤرشف"
+    },
+    "actions": {
+      "filter": "تصفية",
+      "refresh": "تحديث",
+      "search": "بحث",
+      "addProduct": "إضافة منتج",
+      "add": "إضافة"
+    },
+    "table": {
+      "headers": {
+        "product": "المنتج",
+        "status": "الحالة",
+        "inventory": "المخزون",
+        "type": "النوع",
+        "vendor": "البائع",
+        "clearFilters": "مسح كل الفلاتر"
+      }
+    },
+    "search": {
+      "placeholder": "ابحث عن المنتجات...",
+      "searchTerm": "كلمة البحث"
+    },
+    "filters": {
+      "type": "النوع",
+      "allTypes": "كل الأنواع",
+      "vendor": "المورد",
+      "allVendors": "كل الموردين",
+      "inventory": "المخزون",
+      "anyInventory": "أي مخزون",
+      "inStock": "متوفر",
+      "outOfStock": "غير متوفر",
+      "order": "ترتيب الفرز",
+      "orderOptions": {
+        "asc": "تصاعدي",
+        "desc": "تنازلي"
+      },
+      "activeFilters": "الفلاتر النشطة:"
+    },
+    "results": {
+      "showing": "عرض {count} من أصل {total} منتج"
+    },
+    "mobile": {
+      "type": "النوع",
+      "inventory": "المخزون",
+      "vendor": "البائع"
+    }
+  },
+  "CreateProductPage": {
+    "title": "إنشاء منتج",
+    "back": "رجوع",
+    "actions": {
+      "duplicate": "نسخ",
+      "preview": "معاينة",
+      "share": "مشاركة"
+    },
+    "productStatus": {
+      "title": "حالة المنتج",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "onlineStore": "المتجر الإلكتروني",
+      "scheduleAvailability": "جدولة التوفر",
+      "tagsPlaceholder": "الوسوم",
+      "tagsHelp": "اكتب وسم واضغط مسافة أو إدخال لإضافته"
+    },
+    "media": {
+      "title": "الوسائط",
+      "addImage": "إضافة"
+    },
+    "price": {
+      "title": "السعر",
+      "compareAtPrice": "سعر المقارنة",
+      "chargeTax": "فرض ضريبة على هذا المنتج"
+    },
+    "costPerItem": {
+      "title": "التكلفة لكل قطعة",
+      "note": "لن يرى العملاء هذا"
+    },
+    "inventory": {
+      "title": "المخزون",
+      "sku": "رمز SKU (وحدة حفظ المخزون)",
+      "barcode": "الباركود (ISBN, UPC, GTIN, إلخ)",
+      "continueSelling": "الاستمرار في البيع عند نفاد الكمية"
+    },
+    "shipping": {
+      "title": "الشحن",
+      "digitalProduct": "هذا منتج رقمي",
+      "weight": "الوزن",
+      "countryOfOrigin": "بلد المنشأ"
+    },
+    "quantity": {
+      "title": "الكمية",
+      "location": "اسم الموقع",
+      "available": "الكمية المتاحة"
+    },
+    "options": {
+      "title": "الخيارات",
+      "hasOptions": "هذا المنتج يحتوي على خيارات، مثل الحجم أو اللون",
+      "optionName": "اسم الخيار",
+      "optionValues": "قيم الخيار",
+      "addValue": "إضافة قيمة أخرى",
+      "done": "تم",
+      "addOption": "إضافة خيار آخر",
+      "selectOption": "اختر خيارًا",
+      "createNew": "+ إنشاء خيار جديد"
+    },
+    "seo": {
+      "title": "معاينة محرك البحث",
+      "editSeo": "تعديل SEO للموقع",
+      "pageTitle": "عنوان الصفحة",
+      "metaDescription": "وصف التعريف",
+      "urlHandle": "رابط URL",
+      "charactersUsed": "من أصل {max} محرف مستخدم"
+    },
+    "description": "الوصف",
+    "placeholder": {
+      "title": "العنوان",
+      "price": "0.00",
+      "quantity": "1000"
+    }
+  },
+  "Clients": {
+    "title": "العملاء",
+    "latestClients": "أحدث العملاء",
+    "searchToggle": {
+      "ariaLabel": "تبديل وضع بحث العملاء"
+    },
+    "refreshButton": {
+      "ariaLabel": "تحديث قائمة العملاء"
+    }
+  },
+  "ClientProfile": {
+    "backToClients": "العودة إلى العملاء",
+    "clientSince": "عميل منذ",
+    "amountSpent": "المبلغ المنفق",
+    "orders": "الطلبات",
+    "customerSince": "عميل منذ",
+    "timeLine": "الخط الزمني",
+    "leaveComment": "اترك تعليقًا...",
+    "addEmoji": "إضافة إيموجي",
+    "mentionSomeone": "ذكر شخص",
+    "addHashtag": "إضافة هاشتاج",
+    "attachFile": "إرفاق ملف",
+    "post": "نشر",
+    "aboutClient": "حول العميل",
+    "number": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "clientNote": "ملاحظة العميل",
+    "storeCredit": "رصيد المتجر",
+    "seeAllOrders": "عرض جميع الطلبات",
+    "allOrders": "جميع الطلبات",
+    "id": "الرقم",
+    "date": "التاريخ",
+    "total": "الإجمالي",
+    "status": "الحالة",
+    "completed": "مكتمل",
+    "pending": "قيد الانتظار",
+    "refund": "مرتجع"
+  },
+  "VerificationModel": {
+    "accountVerification": "تحقق الحساب",
+    "selected": "تم الاختيار",
+    "cancel": "إلغاء",
+    "save": "حفظ"
+  },
+  "SuccessModel": {
+    "authenticationStatusUpdated": "تم تحديث حالة المصادقة",
+    "ok": "موافق"
+  },
+  "StoreCreditModel": {
+    "editBalance": "تعديل الرصيد",
+    "adjustment": "تعديل",
+    "credit": "إضافة رصيد",
+    "debit": "خصم رصيد",
+    "currency": "العملة",
+    "amount": "المبلغ",
+    "currentBalance": "الرصيد الحالي هو {amount} ر.س",
+    "expirationDate": "تاريخ الانتهاء",
+    "expirationWarning": "تختلف القوانين بين الدول حول تواريخ انتهاء صلاحية رصيد المتجر. تحقق من قوانين بلدك قبل تغيير هذا التاريخ.",
+    "noExpiration": "بدون تاريخ انتهاء",
+    "setExpiration": "تعيين تاريخ انتهاء",
+    "selectExpiration": "اختر تاريخ الانتهاء",
+    "expirationTime": "سينتهي الرصيد في الساعة 11:59 مساءً في التاريخ المحدد",
+    "cancel": "إلغاء",
+    "reviewChanges": "مراجعة التغييرات"
+  },
+  "StoreCreditSummeryModel": {
+    "reviewChanges": "مراجعة التغييرات",
+    "summary": "ملخص",
+    "balance": "الرصيد",
+    "amountTo": "المبلغ المطلوب {adjustment}",
+    "newBalance": "الرصيد الجديد",
+    "expirationDate": "تاريخ الانتهاء",
+    "cancel": "إلغاء",
+    "credit": "إضافة رصيد",
+    "debit": "خصم رصيد"
+  },
+  "StoreCreditBalanceModel": {
+    "storeCreditFor": "رصيد المتجر لـ {customerName}",
+    "balance": "الرصيد",
+    "expirableAmounts": "المبالغ القابلة للانتهاء",
+    "allTransactions": "كل المعاملات",
+    "date": "التاريخ",
+    "event": "الحدث",
+    "source": "المصدر",
+    "expired": "منتهي",
+    "debit": "مدين",
+    "credit": "دائن",
+    "balanceCol": "الرصيد",
+    "learnMore": "تعرف على المزيد حول",
+    "storeCreditLink": "رصيد المتجر",
+    "editBalance": "تعديل الرصيد"
+  },
+  "Rating": {
+    "title": "التقييمات",
+    "latestRating": "أحدث التقييمات",
+    "tabs": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "reply": "الردود"
+    },
+    "actions": {
+      "filter": "تصفية",
+      "refresh": "تحديث",
+      "search": "بحث"
+    },
+    "noRatings": "لا توجد تقييمات في هذا القسم",
+    "modal": {
+      "reply": "رد",
+      "writeReply": "اكتب ردك...",
+      "submitReply": "إرسال الرد",
+      "cancel": "إلغاء",
+      "yourReply": "ردك",
+      "seeReply": "عرض رد المالك"
+    },
+    "ratingActions": {
+      "decline": "رفض",
+      "accept": "قبول"
+    }
+  },
+  "Analytics": {
+    "title": "التحليلات",
+    "metrics": {
+      "grossSales": "إجمالي المبيعات",
+      "totalNetProfit": "صافي الربح الإجمالي",
+      "subscriptionRevenue": "إيرادات الاشتراكات",
+      "financialLiabilities": "الالتزامات المالية",
+      "averageOrderValue": "متوسط قيمة الطلب",
+      "userAnalysis": "تحليل المستخدمين",
+      "shippingCosts": "تكاليف الشحن",
+      "taxes": "الضرائب",
+      "orders": "الطلبات",
+      "totalRefunds": "إجمالي المرتجعات",
+      "totalSadaca": "إجمالي الصدقة",
+      "totalDonations": "إجمالي التبرعات",
+      "dueCharities": "الجمعيات الخيرية المستحقة"
+    },
+    "charts": {
+      "totalSalesOverTime": "إجمالي المبيعات مع مرور الوقت"
+    },
+    "modals": {
+      "financialLiabilities": {
+        "title": "الالتزامات المالية",
+        "cancel": "إلغاء",
+        "save": "حفظ"
+      },
+      "sadaca": {
+        "title": "صدقة",
+        "save": "حفظ",
+        "noEntries": "لا توجد إدخالات صدقة بعد. أضف أول إدخال لك أعلاه!",
+        "date": "التاريخ",
+        "amount": "المبلغ"
+      }
+    },
+    "currencySymbol": "ر.س"
+  },
+  "Activator": {
+    "title": "منشط النخبة",
+    "arrowAlt": "أيقونة السهم",
+    "desktopMode": "وضع سطح المكتب",
+    "mobileMode": "وضع الجوال",
+    "cardIssuance": "إصدار البطاقة",
+    "issueNow": "إصدار الآن",
+    "usernamePlaceholder": "اسم المستخدم",
+    "copy": "نسخ",
+    "history": "السجل",
+    "seeAll": "عرض الكل",
+    "emptyHistory": "السجل فارغ",
+    "refresh": "تحديث",
+    "delete": "حذف",
+    "close": "إغلاق",
+    "searchPlaceholder": "بحث...",
+    "noHistoryFound": "لا توجد سجلات",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "tapPhone": "اضغط بهاتفك على البطاقة",
+    "deleteConfirmation": "هل تريد حذف {username}",
+    "statusConfirmation": "هل تريد {action} {username}",
+    "activate": "تفعيل",
+    "deactivate": "إلغاء التفعيل"
+  },
+  "Calculator": {
+    "title": "اقتباسات",
+    "arrowAlt": "أيقونة السهم",
+    "subtitle": "إدارة والوصول إلى جميع عروض الأسعار الخاصة بك",
+    "description": "إنشاء وإدارة وتتبع عروض الأسعار بسهولة - كل ذلك من مركز واحد.",
+    "newQuote": "عرض سعر جديد",
+    "continue": "متابعة",
+    "quoteManager": "مدير العروض",
+    "quantity": "الكمية",
+    "quantityLabel": "الكمية",
+    "back": "رجوع",
+    "addOnsTitle": "الإضافات",
+    "summary": "ملخص",
+    "selectOffer": "اختيار عرض",
+    "select": "اختيار",
+    "remove": "إزالة",
+    "freeShipping": "شحن مجاني",
+    "firstYearFree": "السنة الأولى مجاناً",
+    "profit": "الربح",
+    "discount": "الخصم",
+    "perPcs": "لكل قطعة",
+    "shipping": "الشحن",
+    "total": "الإجمالي",
+    "checkShare": "مشاركة العرض",
+    "shareAsText": "مشاركة كنص",
+    "shareAsPdf": "مشاركة كملف PDF",
+    "shareAs": "مشاركة كـ",
+    "use": "استخدام",
+    "per": "لكل",
+    "year": "سنة",
+    "month": "شهر",
+    "requestCard": "طلب بطاقة",
+    "multipleDesigns": "تصاميم متعددة",
+    "singleDesign": "تصميم واحد",
+    
+    "products": {
+      "eliteCard": {
+        "name": "البطاقة المميزة",
+        "description": "بطاقة iScan بملمس غير لامع وشعار UV بارز - أناقة تناسب قادة الأعمال",
+        "features": [
+          "ملمس غير لامع مميز",
+          "شعار UV بارز",
+          "تصميم فاخر",
+          "ملائم لقادة الأعمال"
+        ]
+      },
+      "elitePass": {
+        "name": "البطاقة الرقمية المميزة",
+        "description": "بطاقة رقمية أنيقة بتصميم غير لامع وشعار لامع، دائمًا معك على هاتفك",
+        "features": [
+          "بطاقة رقمية",
+          "تصميم غير لامع",
+          "شعار لامع",
+          "متوافق مع الجوال"
+        ]
+      },
+      "elitePrint": {
+        "name": "الطباعة المميزة",
+        "description": "تحويل رؤيتك إلى واقع بأناقة الملمس غير اللامع ولمعان UV - تحويل كل بطاقة إلى قطعة فاخرة",
+        "features": [
+          "أناقة الملمس غير اللامع",
+          "لمعان UV",
+          "تشطيب فاخر",
+          "جودة ممتازة"
+        ]
+      }
+    },
+    
+    "addOns": {
+      "wallet": {
+        "name": "محفظة+",
+        "description": "رقص النهر الهادئ تحت ضوء القمر الفضي"
+      }
+    },
+    
+    "shareOptions": {
+      "gmail": "جيميل",
+      "whatsapp": "واتساب",
+      "outlook": "آوتلوك",
+      "telegram": "تيليجرام"
+    },
+    
+    "offers": {
+      "discount": {
+        "10": "خصم %10",
+        "15": "خصم %15",
+        "20": "خصم %20",
+        "25": "خصم %25",
+        "30": "خصم %30"
+      },
+      "subscription": {
+        "monthly": "الخطة الشهرية",
+        "yearly": "الخطة السنوية",
+        "premium": "الخطة المميزة"
+      }
+    }
+  },
+  "BlogPosts": {
+    "title": "المدونات",
+    "tabs": {
+      "all": "الكل",
+      "published": "منشور",
+      "draft": "مسودة",
+      "archived": "مؤرشف"
+    },
+    "actions": {
+      "create": "إنشاء منشور",
+      "createShort": "إنشاء",
+      "filter": "تصنيف",
+      "refresh": "تحديث",
+      "search": "بحث",
+      "clearFilters": "مسح جميع الفلاتر"
+    },
+    "search": {
+      "placeholder": "ابحث في المنشورات، الأقسام، أو المؤلفين..."
+    },
+    "table": {
+      "post": "المنشور",
+      "status": "الحالة",
+      "views": "المشاهدات",
+      "category": "القسم",
+      "author": "المؤلف",
+      "selectAll": "تحديد الكل",
+      "selectedCount": "تم اختيار {count}"
+    },
+    "filters": {
+      "category": "القسم",
+      "allCategories": "كل الأقسام",
+      "author": "المؤلف",
+      "allAuthors": "كل المؤلفين",
+      "sortBy": "ترتيب حسب",
+      "sortOptions": {
+        "title": "العنوان",
+        "views": "المشاهدات",
+        "category": "القسم",
+        "author": "المؤلف"
+      },
+      "order": "الترتيب",
+      "orderOptions": {
+        "asc": "تصاعدي",
+        "desc": "تنازلي"
+      },
+      "activeFilters": "الفلاتر النشطة:"
+    },
+    "results": {
+      "showing": "عرض {filtered} من أصل {total} منشور",
+      "none": "لا توجد منشورات تطابق معايير البحث."
+    },
+    "status": {
+      "published": "منشور",
+      "draft": "مسودة",
+      "archived": "مؤرشف"
+    }
+  },
+  "CreatePost": {
+    "title": "إضافة مدونة جديدة",
+    "form": {
+      "title": {
+        "label": "العنوان",
+        "placeholder": "مثال: مدونة عن أحدث المنتجات أو الأخبار"
+      },
+      "content": {
+        "label": "المحتوى"
+      },
+      "excerpt": {
+        "label": "ملخص",
+        "addButton": "إضافة ملخص",
+        "description": "أضف ملخصًا للمنشور ليظهر على صفحتك الرئيسية أو المدونة."
+      },
+      "seo": {
+        "label": "معاينة محرك البحث",
+        "editButton": "تحرير SEO للموقع",
+        "description": "أضف عنوانًا ووصفًا لمعرفة كيف قد يظهر هذا المنشور في نتائج محرك البحث",
+        "pageTitle": "عنوان الصفحة",
+        "metaDescription": "وصف التعريف",
+        "urlHandle": "رابط URL"
+      },
+      "visibility": {
+        "label": "الرؤية",
+        "visible": "مرئي",
+        "hidden": "مخفي",
+        "publishDate": "تاريخ النشر"
+      },
+      "featuredImage": {
+        "label": "الصورة الرئيسية",
+        "addButton": "إضافة صورة"
+      },
+      "organization": {
+        "label": "التنظيم",
+        "author": "المؤلف",
+        "blog": "المدونة",
+        "tags": "الوسوم",
+        "tagsPlaceholder": "إضافة وسوم..."
+      },
+      "actions": {
+        "saveDraft": "حفظ كمسودة",
+        "next": "التالي"
+      }
+    }
+  },
+  "Discount": {
+    "title": "الخصومات",
+    "tabs": {
+      "all": "الكل",
+      "active": "نشط",
+      "scheduled": "مجدول",
+      "expired": "منتهي"
+    },
+    "actions": {
+      "filter": "تصفية",
+      "refresh": "تحديث",
+      "search": "بحث",
+      "create": "إنشاء خصم",
+      "createShort": "إنشاء",
+      "generate": "توليد",
+      "browse": "تصفح",
+      "cancel": "إلغاء",
+      "save": "حفظ الخصم"
+    },
+    "table": {
+      "title": "العنوان",
+      "status": "الحالة",
+      "type": "النوع",
+      "uses": "عدد الاستخدامات"
+    },
+    "modal": {
+      "selectTitle": "اختر نوع الخصم",
+      "productDiscount": "خصم على المنتجات",
+      "orderDiscount": "خصم على الطلب",
+      "buyXGetY": "اشتر X واحصل على Y",
+      "freeShipping": "شحن مجاني",
+      "subtitle": {
+        "product": "خصم منتج",
+        "order": "خصم طلب",
+        "shipping": "خصم شحن"
+      }
+    },
+    "form": {
+      "title": "إنشاء خصم {type}",
+      "sections": {
+        "method": {
+          "title": "الطريقة",
+          "discountCode": {
+            "label": "كود الخصم",
+            "description": "يجب على العملاء إدخال الكود للحصول على الخصم"
+          },
+          "automatic": {
+            "label": "خصم تلقائي",
+            "description": "يتم تطبيق الخصم تلقائيًا عند الدفع"
+          }
+        },
+        "value": {
+          "title": "القيمة",
+          "percentage": "نسبة مئوية",
+          "fixedAmount": "مبلغ ثابت"
+        },
+        "appliesTo": {
+          "title": "ينطبق على",
+          "allProducts": "جميع المنتجات",
+          "specificCollections": "مجموعات محددة",
+          "specificProducts": "منتجات محددة"
+        },
+        "requirements": {
+          "title": "متطلبات الشراء الأدنى",
+          "none": "لا توجد متطلبات",
+          "amount": "حد أدنى لمبلغ الشراء",
+          "quantity": "حد أدنى لعدد العناصر"
+        },
+        "combinations": {
+          "title": "التجميعات",
+          "description": "يمكن دمج هذا الخصم مع:",
+          "productDiscounts": "خصومات المنتجات",
+          "orderDiscounts": "خصومات الطلبات",
+          "shippingDiscounts": "خصومات الشحن"
+        },
+        "dates": {
+          "title": "التواريخ النشطة",
+          "start": "تاريخ ووقت البدء *",
+          "end": "تعيين تاريخ ووقت الانتهاء"
+        }
+      },
+      "fields": {
+        "discountCode": "أدخل كود الخصم",
+        "discountTitle": "أدخل عنوان الخصم",
+        "value": "القيمة",
+        "minimumAmount": "الحد الأدنى للمبلغ",
+        "minimumQuantity": "الحد الأدنى للكمية",
+        "startDate": "تاريخ البدء",
+        "startTime": "وقت البدء",
+        "endDate": "تاريخ الانتهاء",
+        "endTime": "وقت الانتهاء"
+      }
+    }
+  },
+  "DiscountCreate": {
+    "title": "إنشاء خصم",
+    "sections": {
+      "method": {
+        "title": "الطريقة",
+        "discountCode": {
+          "label": "كود الخصم",
+          "description": "يجب على العملاء إدخال كود للحصول على الخصم",
+          "placeholder": "أدخل كود الخصم",
+          "generate": "توليد"
+        },
+        "automatic": {
+          "label": "خصم تلقائي",
+          "description": "يتم تطبيق الخصم تلقائيًا عند الدفع",
+          "placeholder": "أدخل عنوان الخصم"
+        }
+      },
+      "value": {
+        "title": "القيمة",
+        "percentage": "نسبة مئوية",
+        "fixedAmount": "مبلغ ثابت",
+        "placeholder": "القيمة"
+      },
+      "appliesTo": {
+        "title": "ينطبق على",
+        "allProducts": "جميع المنتجات",
+        "specificCollections": "مجموعات محددة",
+        "specificProducts": "منتجات محددة",
+        "browse": "تصفح"
+      },
+      "requirements": {
+        "title": "متطلبات الشراء الأدنى",
+        "none": "لا توجد متطلبات",
+        "amount": "حد أدنى لمبلغ الشراء",
+        "quantity": "حد أدنى لعدد العناصر",
+        "placeholder": {
+          "amount": "0.00",
+          "quantity": "1"
+        }
+      },
+      "combinations": {
+        "title": "التجميعات",
+        "description": "يمكن دمج هذا الخصم مع:",
+        "productDiscounts": "خصومات المنتجات",
+        "orderDiscounts": "خصومات الطلبات",
+        "shippingDiscounts": "خصومات الشحن"
+      },
+      "dates": {
+        "title": "التواريخ النشطة",
+        "start": "تاريخ ووقت البدء *",
+        "end": "تعيين تاريخ ووقت الانتهاء",
+        "startDate": "تاريخ البدء",
+        "startTime": "وقت البدء",
+        "endDate": "تاريخ الانتهاء",
+        "endTime": "وقت الانتهاء"
+      }
+    },
+    "actions": {
+      "cancel": "إلغاء",
+      "save": "حفظ الخصم"
+    }
+  }
+}

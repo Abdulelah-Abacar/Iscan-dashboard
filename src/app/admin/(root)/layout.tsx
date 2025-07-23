@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+import { AdminHeader } from "@/components/AdminHeader";
+import { AdminSidebar } from "@/components/sidebars/AdminSidebar";
+import { SearchProvider } from "@/contexts/SearchContext";
+import { MobileNavBar } from "@/components/MobileNavBar";
+import { Toaster } from "@/components/ui/sonner";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s - Iscan Admins Dashboard",
+    absolute: "Iscan Dashboard",
+  },
+  description:
+    "Iscan Admins Dashboard for managing your users, orders and settings.",
+};
+
+export default function AdminLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <SearchProvider>
+      <div className="min-h-screen py-2 px-2 md:px-5 lg:px-10 pb-10 w-full max-w-7xl mx-auto space-y-10">
+        <AdminHeader />
+        <div className="flex flex-1 md:gap-8">
+          <AdminSidebar />
+          <main className="flex-1">{children}</main>
+          <MobileNavBar />
+        </div>
+      </div>
+      <Toaster />
+    </SearchProvider>
+  );
+}

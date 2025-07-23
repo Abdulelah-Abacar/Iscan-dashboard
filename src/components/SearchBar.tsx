@@ -2,7 +2,7 @@
 import { Bell, Filter, Search, X } from "lucide-react";
 import { LanguageSelector } from "./LanguageSelector";
 import { useEffect, useRef } from "react";
-import { useSearch } from "@/contexts/SearchContext"; // Import the context
+import { useSearch } from "@/contexts/SearchContext";
 
 export function SearchBar({ isMobile = false }) {
   const searchInputRef = useRef(null);
@@ -71,15 +71,15 @@ const GlobalSearchBar = ({
   searchInputRef, 
   searchQuery, 
   handleSearch, 
-  handleClearSearch 
+  handleClearSearch,
 }) => (
   <div className={`flex-1 items-center w-full ${isMobile ? "" : "max-w-md"}`}>
-    <div className="p-2 md:p-3.5 lg:p-5 bg-[#f0f0f0] rounded-full max-w-[550px] mx-auto flex justify-center items-center gap-2">
+    <div className="p-2 md:p-3.5 lg:p-5 bg-[#f0f0f0] rounded-full max-w-[550px] mx-auto flex justify-center items-center gap-2" dir="ltr">
       <div className="bg-white p-2 rounded-full">
         <Bell />
       </div>
       <div className="flex-1 relative">
-        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+        <div className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400`}>
           <Search size={16} />
         </div>
         <input
