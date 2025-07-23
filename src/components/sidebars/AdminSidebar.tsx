@@ -16,7 +16,7 @@ export function AdminSidebar() {
   const currentPath = usePathname();
 
   const sidebarItems = [
-    { path: "/admin/", icon: HomeIcon, label: "Home" },
+    { path: "/admin", icon: HomeIcon, label: "Home" },
     { path: "/admin/orders", icon: Inbox, label: "Orders", notificationCount: 6 },
     { path: "/admin/products", icon: Product, label: "Products" },
     { path: "/admin/clients", icon: UserCircle, label: "Clients" },
